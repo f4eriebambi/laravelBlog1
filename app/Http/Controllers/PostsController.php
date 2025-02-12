@@ -48,12 +48,6 @@ class PostsController extends Controller
             'image' => 'required|mimes:jpg,png,jpeg|max:5048'
         ]);
 
-        if (file_exists($_FILES['file']['tmp_name'])) {
-            echo "Temporary file exists!";
-        } else {
-            echo "Temporary file does NOT exist.";
-        }
-
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
 
         $request->image->move(public_path('images'), $newImageName);
