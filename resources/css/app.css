@@ -4,6 +4,13 @@
 
 @import "tailwindcss/utilities";
 
+* {
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+  }
+
 .background-image 
 {
     background-image: url('https://i.pinimg.com/474x/79/e7/73/79e773bef8f9d19f5c3279732c58fe01.jpg');
@@ -59,4 +66,38 @@
 
 .text-custom-color {
     color: #444e71;
+}
+
+.background-color-custom {
+    /* background-color: #e3e3e3; */
+    background-color: rgb(217, 217, 217);
+}
+
+.p-15 {
+    margin-top: 3.75rem;
+    margin-bottom: 3.75rem;
+}
+
+.max-w-4xl {
+    /* max-width: 64rem; */
+    max-width: 83rem;
+}
+
+.text-xl {
+    font-size: 1.60rem;
+}
+
+.gray-background {
+    background-color: #efefef;
+    border-bottom: 1px solid #e5e7eb; /* Gray border */
+    padding-top: 3.75rem; /* py-15 equivalent */
+    padding-bottom: 3.75rem;
+    margin-top: 5rem; /* Adds space above */
+    width: 90%; /* Crops the background width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gray-background div.text-left {
+    margin-top: 2rem; 
 }
