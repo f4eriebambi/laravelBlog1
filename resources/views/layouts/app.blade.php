@@ -7,7 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+    <title>@yield('title', 'offduty ⋆｡☆ fairy')</title>
+    <link rel="icon" type="image/png" href="/images/cherry_icon.png">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,8 +23,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
+    {{-- <div class="bg-red-500 p-4">
+        Test Tailwind CSS
+      </div> --}}
     <div id="app">
-        <header class="bg-red py-10">
+        {{-- <header class="bg-red py-10"> --}}
+            <header class="bg-red py-10 header-background">
             <div class="container mx-auto px-6">
                 <div class="header-title">
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-black no-underline meie-script-regular">

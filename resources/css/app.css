@@ -1,31 +1,58 @@
-@import "tailwindcss/base";
-
-@import "tailwindcss/components";
-
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
     font-family: "Roboto Condensed", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    /* background-color: red; */
   }
 
-.background-image 
-{
+/* html {
+     transform: scale(0.97); */ /* Adjust the scale value as needed */
+    /* width: 100%;
+    height: 100%; 
+} */
+
+/* .background-image {
     background-image: url('https://i.pinimg.com/474x/79/e7/73/79e773bef8f9d19f5c3279732c58fe01.jpg');
     background-position: center center;
-    /* background-repeat: no-repeat; */
     background-attachment: fixed;
-    /* background-size: cover; */
     height: 600px;
-    /* rotate: 260deg; */
     zoom: 90%;
+} */
+
+.background-image {
+    position: relative; /* Required for pseudo-element positioning */
+    height: 600px;
+    overflow: hidden; /* Ensures the pseudo-element doesn't overflow */
+    zoom: 90%;
+}
+
+.background-image::before {
+    content: '';
+    background-image: url('/images/sade.jpg');
+    background-position: center center; /* Keeps the image centered */
+    background-repeat: repeat; /* Ensures the image repeats */
+    background-size: auto; /* Preserves the original image size */
+    position: fixed; /* Makes the pseudo-element fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensures the background is behind the content */
 }
 
 /* h2 {
     color: green !important;
 } */
+
+.header-background {
+    /* background-color: red; */
+    background-image: url('/images/sade.jpg');
+}
 
 .header-container {
     border: 2px solid #ccc;
@@ -36,7 +63,7 @@
     font-family: "Meie Script", serif;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .header-nav {
@@ -84,12 +111,27 @@
 }
 
 .text-xl {
-    font-size: 1.60rem;
+    font-size: 1.50rem;
+}
+
+/* Style the video container */
+.video-container {
+    width: 100%; /* Ensure the container fills its parent */
+    max-width: 700px; /* Match the original width */
+    margin: 0 auto; /* Center the container */
+    overflow: hidden; /* Hide any overflow */
+}
+
+/* Style the video element */
+.video-container video {
+    width: 100%; /* Make the video fill the container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below the video */
 }
 
 .gray-background {
-    background-color: #efefef;
-    border-bottom: 1px solid #e5e7eb; /* Gray border */
+    background-color: #ececec;
+    border-bottom: 1px solid #ececec;
     padding-top: 3.75rem; /* py-15 equivalent */
     padding-bottom: 3.75rem;
     margin-top: 5rem; /* Adds space above */
@@ -100,4 +142,150 @@
 
 .gray-background div.text-left {
     margin-top: 2rem; 
+}
+
+/* Explore Section with Background */
+.explore-section {
+    background-color: #2a2936;
+    background-size: cover;
+    background-position: center;
+    height: 300px; /* Adjust height as needed */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.custom-opacity-overlay {
+    background-color: rgba(0, 0, 0, 0.3); /* Adjust the opacity value (0.3 = 30%) */
+}
+.custom-section .relative img {
+    height: 40rem;
+    width: 100%;
+}
+
+/* Custom CSS to adjust padding */
+.custom-padding {
+    padding: 2.5rem; /* Adjust the padding value as needed */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Auto-Scrolling Carousel Animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Adjust to -50% for seamless looping */
+    }
+}
+
+.animate-scroll {
+    animation: scroll 40s linear infinite; /* Adjust speed as needed */
+    display: flex;
+    width: max-content;
+}
+
+.relative.w-full.overflow-hidden.py-10 {
+    background-color: white; /* Add white background to the carousel section */
+    z-index: 1; /* Ensure it stays above other content */
+}
+
+.min-w-\[300px\] {
+    min-width: 300px;
+    max-width: 30px;
+}
+
+.footer-background {
+    background-color: #efefef;
+    padding: 3rem;
+}
+
+.footer-background .flex.space-x-6 {
+    margin-left: 2rem; /* Adjust as needed */
+    margin-right: 2rem; /* Adjust as needed */
+}
+
+/* Custom styles for the footer */
+footer a:hover {
+    color: #9CA3AF; 
+}
+
+/* Custom Sign Up Button */
+.custom-signup-button {
+    position: relative;
+    height: 50px;
+    padding: 0 30px;
+    border: 2px solid #000;
+    background: #efefef;
+    user-select: none;
+    white-space: nowrap;
+    transition: all .05s linear;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.custom-signup-button:before,
+.custom-signup-button:after {
+    content: "";
+    position: absolute;
+    background: #efefef;
+    transition: all .2s linear;
+}
+
+.custom-signup-button:before {
+    width: calc(100% + 6px);
+    height: calc(100% - 16px);
+    top: 8px;
+    left: -3px;
+}
+
+.custom-signup-button:after {
+    width: calc(100% - 16px);
+    height: calc(100% + 6px);
+    top: -3px;
+    left: 8px;
+}
+
+.custom-signup-button:hover {
+    cursor: crosshair;
+}
+
+.custom-signup-button:active {
+    transform: scale(0.95);
+}
+
+.custom-signup-button:hover:before {
+    height: calc(100% - 32px);
+    top: 16px;
+}
+
+.custom-signup-button:hover:after {
+    width: calc(100% - 32px);
+    left: 16px;
+}
+
+.custom-signup-button span {
+    font-size: 15px;
+    z-index: 3;
+    position: relative;
+    font-weight: 600;
 }
