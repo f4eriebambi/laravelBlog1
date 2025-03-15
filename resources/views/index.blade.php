@@ -67,7 +67,7 @@
                 </div>
                 <div class="absolute inset-0 flex items-center justify-center bg-black text-white text-center p-4 col-span-2 custom-opacity-overlay">
                     <p class="text-xl font-bold">
-                        Not sure what to wear? We’ve got you covered! Explore outfit inspirations, seasonal trends, and styling tips to elevate your wardrobe. 
+                        Not sure what to wear? I’ve got you covered! Explore outfit inspirations, seasonal trends, and styling tips to elevate your wardrobe. 
                         <br>
                         Discover the perfect look for every occasion and let your style speak volumes.
                     </p>
@@ -81,10 +81,10 @@
     <div class="overlay"></div>
     <div class="content">
         <h2 class="text-3xl font-bold dm-serif-text-regular text-white">
-            So, We’d Like to Invite You to Explore the World of an  <span class="meie-script-regular"> offduty ⋆｡☆ fairy </span> !
+            So, I’d Like to Invite You to Explore the World of an  <span class="meie-script-regular"> offduty ⋆｡☆ faerie </span> !
         </h2>
         <p class="text-xl text-gray-200 mt-6">
-            Here’s a glimpse of what we have in store for you...
+            Here’s a glimpse of what I have in store for you...
         </p>
     </div>
 </div>

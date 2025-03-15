@@ -5,9 +5,12 @@
             <!-- Don't Miss Out and Sign Up Button -->
             <div class="flex items-center space-x-4">
                 <p class="text-gray text-lg">Don't Miss Out </p>
-                <a href="/register" class="custom-signup-button">
-                    <span>Sign Up</span>
-                </a>
+                <div class="button-wrap">
+                    <a href="/register" class="custom-signup-button">
+                        <span>Sign Up</span>
+                    </a>
+                    <div class="button-shadow"></div>
+                </div>
             </div>
 
             <!-- About, Blog, Orabella, Vogue -->
@@ -40,9 +43,9 @@
 
         <!-- Bottom Row: Made with <3, Closing, Copyright -->
         <div class="flex flex-col sm:flex-row justify-between items-center space-y-6 sm:space-y-0">
-            <!-- Made with ꨄ by your offduty fairy -->
+            <!-- Made with ꨄ by your offduty faerie -->
             <p class="text-gray-400 text-sm">
-                Made with <span class="text-black-500">ꨄ</span> by your fairy ⊹ ࣪ ˖
+                Made with <span class="text-black-500">ꨄ</span> by your faerie ⊹ ࣪ ˖
             </p>
 
             <!-- Closing -->

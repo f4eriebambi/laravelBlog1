@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
-    <title>@yield('title', 'offduty ⋆｡☆ fairy')</title>
+    <title>@yield('title', 'offduty ⋆｡☆ faerie')</title>
     <link rel="icon" type="image/png" href="/images/cherry_icon.png">
 
     <!-- Scripts -->
@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Meie+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     {{-- <div class="bg-red-500 p-4">
@@ -32,7 +33,7 @@
             <div class="container mx-auto px-6">
                 <div class="header-title">
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-black no-underline meie-script-regular">
-                        offduty ⋆｡☆ fairy
+                        offduty ⋆｡☆ faerie
                     </a>
                 </div>
                 <div class="header-container">
