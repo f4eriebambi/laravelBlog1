@@ -1,3 +1,6 @@
+@import "components/_login.css";
+@import "components/_register.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -215,7 +218,7 @@
 
 .about-hero {
     height: 50vh;
-    background-image: url("https://i.pinimg.com/736x/5a/b7/03/5ab703d369e50b84ca0f4612a07d4272.jpg");
+    background-image: url("/images/aboutAesthetic.jpg");
     background-position: center;
     position: relative;
     display: flex;
@@ -318,7 +321,7 @@
 }
 
 .about-cta-image {
-    background-image: url("https://i.pinimg.com/736x/03/53/0a/03530ae253281b4ecbc9199ab138e440.jpg");
+    background-image: url("/images/aboutDivider.jpg");
     background-repeat: repeat-x;
     background-size: auto 100%;
     height: 80px;

@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,16 +11,25 @@ const mix = require('laravel-mix');
  |
  */
 
-mix
-  .js('resources/js/app.js', 'public/js')
-  .postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('postcss-nested'),
-    require('autoprefixer'),
-  ]);
+mix.webpackConfig({
+    stats: {
+        children: true, // Enable detailed stats for child compilations
+    },
+});
+
+mix.js("resources/js/app.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [
+        require("postcss-import")({
+            path: ["resources/css"],
+        }),
+        require("tailwindcss"),
+        require("postcss-nested"),
+        require("autoprefixer"),
+    ])
+    .options({
+        processCssUrls: false,
+    });
 
 if (mix.inProduction()) {
-  mix
-    .version();
+    mix.version();
 }

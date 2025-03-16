@@ -75,7 +75,7 @@
         </div>
             <!-- Image and ASCII Art Container -->
             <div class="ascii-art-container">
-                <img src="https://i.pinimg.com/736x/15/2d/af/152daf4d01888eff6a491455fe27ff00.jpg" alt="Background Image"
+                <img src="/images/asciiArtImage.jpg" alt="Background Image" hvjv
                     class="ascii-art-image">
                 <pre class="ascii-art">
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀

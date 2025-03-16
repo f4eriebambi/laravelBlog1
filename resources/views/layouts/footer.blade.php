@@ -29,7 +29,7 @@
                 <a href="https://www.instagram.com/vi0iatte" class="text-gray-400 hover:text-white" target="_blank">
                     <img src="/images/instagram.png" alt="Instagram" class="w-6 h-6">
                 </a>
-                <a href="https://twitter.com/heartzjp" class="text-gray-400 hover:text-white" target="_blank">
+                <a href="https://x.com/heartzjpg?lang=en" class="text-gray-400 hover:text-white" target="_blank">
                     <img src="/images/twitter.png" alt="Twitter" class="w-6 h-6"> 
                 </a>
                 <a href="https://www.youtube.com/@wested_arin908" class="text-gray-400 hover:text-white" target="_blank">

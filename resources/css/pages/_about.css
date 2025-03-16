@@ -1,0 +1,221 @@
+.about-hero {
+    height: 50vh;
+    background-image: url("https://i.pinimg.com/736x/5a/b7/03/5ab703d369e50b84ca0f4612a07d4272.jpg");
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.about-hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    max-width: 850px;
+    padding: 0 1.5rem;
+}
+
+.about-hero-title {
+    font-size: 3rem;
+    /* font-weight: bold; */
+    margin-bottom: 1rem;
+}
+
+.about-hero-text {
+    font-size: 1.1rem;
+    line-height: 1.75;
+}
+
+/* Content Section */
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    /* padding: 4rem 1.5rem; */
+    padding-top: 4rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.about-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text-title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 1.5rem;
+}
+
+.about-text-paragraph {
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+}
+
+/* Call to Action Section */
+.about-cta {
+    background-color: #f3f4f6;
+    /* padding: 4rem 1.5rem; */
+    padding-right: 1.5rem;
+    /* padding-bottom: 1rem; */
+    padding-left: 1.5rem;
+    text-align: center;
+}
+
+.about-cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-cta-title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 1.5rem;
+}
+
+.about-cta-text {
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+}
+
+.about-cta-image-container {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.about-cta-image {
+    background-image: url("https://i.pinimg.com/736x/03/53/0a/03530ae253281b4ecbc9199ab138e440.jpg");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    height: 80px;
+    width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* About Signup Button */
+.about-signup-button {
+    position: relative;
+    height: 50px;
+    padding: 0 30px;
+    border: 2px solid #000;
+    background: #f3f4f6; /* Updated background color */
+    user-select: none;
+    white-space: nowrap;
+    transition: all 0.05s linear;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 4%;
+}
+
+.about-signup-button:before,
+.about-signup-button:after {
+    content: "";
+    position: absolute;
+    background: #f3f4f6; /* Updated background color */
+    transition: all 0.2s linear;
+}
+
+.about-signup-button:before {
+    width: calc(100% + 6px);
+    height: calc(100% - 16px);
+    top: 8px;
+    left: -3px;
+}
+
+.about-signup-button:after {
+    width: calc(100% - 16px);
+    height: calc(100% + 6px);
+    top: -3px;
+    left: 8px;
+}
+
+.about-signup-button:hover {
+    cursor: crosshair;
+}
+
+.about-signup-button:hover span {
+    color: #9ca3af; /* gray-400 color */
+}
+
+.about-signup-button:active {
+    transform: scale(0.95);
+}
+
+.about-signup-button:hover:before {
+    height: calc(100% - 32px);
+    top: 16px;
+}
+
+.about-signup-button:hover:after {
+    width: calc(100% - 32px);
+    left: 16px;
+}
+
+.about-signup-button span {
+    font-size: 15px;
+    z-index: 3;
+    position: relative;
+    font-weight: 600;
+}
+
+/* CSS for the ASCII Art Container */
+.ascii-art-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 20px 0;
+}
+
+.ascii-art-image {
+    width: 200px; /* Adjust the width to match the ASCII art size */
+    height: auto;
+    opacity: 0.7; /* Make the image partially transparent */
+    position: absolute; /* Position the image behind the ASCII art */
+    left: 25%;
+    top: 0;
+    z-index: 1; /* Place the image behind the ASCII art */
+}
+
+.ascii-art {
+    font-family: monospace;
+    white-space: pre;
+    font-size: 12px; /* Adjust font size to match the image size */
+    line-height: 1;
+    margin: 0;
+    position: relative;
+    z-index: 2; /* Place the ASCII art on top of the image */
+    left: 25%;
+}
+
+.button-container {
+    display: inline-block; /* Constrain the width to the button's size */
+    position: relative;
+    margin: 0 auto; /* Center the button */
+    text-align: center; /* Ensure the button is centered */
+    padding-bottom: 1.5rem;
+}
