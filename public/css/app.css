@@ -941,6 +941,14 @@ video {
     top: 0px;
 }
 
+.right-2 {
+    right: 0.5rem;
+}
+
+.top-2 {
+    top: 0.5rem;
+}
+
 .z-50 {
     z-index: 50;
 }
@@ -1062,6 +1070,14 @@ video {
     height: 100vh;
 }
 
+.h-auto {
+    height: auto;
+}
+
+.h-48 {
+    height: 12rem;
+}
+
 .min-h-screen {
     min-height: 100vh;
 }
@@ -1124,6 +1140,10 @@ video {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .flex-col {
     flex-direction: column;
 }
@@ -1158,6 +1178,14 @@ video {
 
 .gap-20 {
     gap: 5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.gap-6 {
+    gap: 1.5rem;
 }
 
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
@@ -2701,6 +2729,20 @@ footer a:hover {
         --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
         box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+}
+
+@media (min-width: 768px) {
+
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 

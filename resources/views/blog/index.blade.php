@@ -29,52 +29,61 @@
 
 @foreach ($posts as $post)
     <div class="sm:grid grid-cols-2 gap-20 w-4/5 mx-auto py-15 border-b border-gray-200">
-        <div>
-            <img src="{{ asset('images/' . $post->image_path) }}" alt="">
-        </div>
-        <div>
-            <h2 class="text-gray-700 font-bold text-5xl pb-4">
-                {{ $post->title }}
-            </h2>
+    <div>
+        <!-- Display the first image (if available) -->
+        @if ($post->media->isNotEmpty())
+            <img src="{{ asset('storage/' . $post->media->first()->file_path) }}" alt="Post Image"
+                class="w-full h-64 object-cover rounded-lg shadow-lg">
+        @else
+            <!-- Placeholder if no images exist -->
+            <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg shadow-lg">
+                <span class="text-gray-500">No Image</span>
+            </div>
+        @endif
+    </div>
+    <div>
+        <h2 class="text-gray-700 font-bold text-5xl pb-4">
+            {{ $post->title }}
+        </h2>
 
-            <span class="text-gray-500">
-                By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->updated_at)) }}
+        <span class="text-gray-500">
+            By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->updated_at)) }}
+        </span>
+
+        <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
+            {{ $post->description }}
+        </p>
+
+        <a href="/blog/{{ $post->slug }}" class="uppercase bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+            Keep Reading
+        </a>
+
+        @if (Auth::check() && Auth::id() === 1)
+            <span class="float-right">
+                <a 
+                    href="/blog/{{ $post->slug }}/edit"
+                    class="text-gray-700 italic hover:text-gray-900 pb-1 border-b-2">
+                    Edit
+                </a>
             </span>
 
-            <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
-                {{ $post->description }}
-            </p>
+            <span class="float-right">
+                <form 
+                    action="/blog/{{ $post->slug }}"
+                    method="POST">
+                    @csrf
+                    @method('delete')
 
-            <a href="/blog/{{ $post->slug }}" class="uppercase bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-                Keep Reading
-            </a>
-
-            @if (Auth::check() && Auth::id() === 1)
-                <span class="float-right">
-                    <a 
-                        href="/blog/{{ $post->slug }}/edit"
-                        class="text-gray-700 italic hover:text-gray-900 pb-1 border-b-2">
-                        Edit
-                    </a>
-                </span>
-
-                <span class="float-right">
-                     <form 
-                        action="/blog/{{ $post->slug }}"
-                        method="POST">
-                        @csrf
-                        @method('delete')
-
-                        <button
-    class="delete-button text-red-500 pr-3"
-    type="button"> <!-- Change type to "button" to prevent form submission -->
-    Delete
-</button>
-                    </form>
-                </span>
-            @endif
-        </div>
-    </div>    
+                    <button
+                        class="delete-button text-red-500 pr-3"
+                        type="button"> <!-- Change type to "button" to prevent form submission -->
+                        Delete
+                    </button>
+                </form>
+            </span>
+        @endif
+    </div>
+</div>
 @endforeach
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\PostMedia;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
@@ -45,20 +46,31 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+            'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240', // Allow multiple files (10MB max each)
         ]);
 
-        $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
-
-        $request->image->move(public_path('images'), $newImageName);
-
-        Post::create([
+        // Create the post
+        $post = Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-            'image_path' => $newImageName,
-            'user_id' => auth()->user()->id
+            'image_path' => null, // Remove single image upload logic
+            'user_id' => auth()->user()->id,
         ]);
+
+        // Handle multiple media uploads
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('post_media', 'public'); // Store in 'storage/app/public/post_media'
+                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+
+                PostMedia::create([
+                    'post_id' => $post->id,
+                    'file_path' => $path,
+                    'file_type' => $fileType,
+                ]);
+            }
+        }
 
         return redirect('/blog')
             ->with('message', 'Your post has been added!');
@@ -100,15 +112,33 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240', // Allow multiple files (10MB max each)
         ]);
 
-        Post::where('slug', $slug)
-            ->update([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-                'user_id' => auth()->user()->id
-            ]);
+        // Find the post
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Update the post
+        $post->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        // Handle new media uploads
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('post_media', 'public'); // Store in 'storage/app/public/post_media'
+                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+
+                PostMedia::create([
+                    'post_id' => $post->id,
+                    'file_path' => $path,
+                    'file_type' => $fileType,
+                ]);
+            }
+        }
 
         return redirect('/blog')
             ->with('message', 'Your post has been updated!');

@@ -10,10 +10,19 @@
     </div>
 
     <div class="w-4/5 m-auto pt-20">
-        <!-- Display the image -->
-        <div class="mb-8">
-            <img src="{{ asset('images/' . $post->image_path) }}" alt="{{ $post->title }}"
-                class="w-full rounded-lg shadow-lg">
+        <!-- Display all images/videos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            @foreach ($post->media as $media)
+                @if ($media->file_type === 'image')
+                    <img src="{{ asset('storage/' . $media->file_path) }}" alt="Post Image"
+                        class="w-full h-64 object-cover rounded-lg shadow-lg">
+                @elseif ($media->file_type === 'video')
+                    <video controls class="w-full h-64 object-cover rounded-lg shadow-lg">
+                        <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @endif
+            @endforeach
         </div>
 
         <span class="text-gray-500">

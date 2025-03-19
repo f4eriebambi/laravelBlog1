@@ -18,6 +18,12 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Add relationship to PostMedia
+    public function media()
+    {
+        return $this->hasMany(PostMedia::class);
+    }
+
     public function sluggable(): array
     {
         return [

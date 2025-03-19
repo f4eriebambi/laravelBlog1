@@ -8,7 +8,7 @@
         </h1>
     </div>
 </div>
- 
+
 @if ($errors->any())
     <div class="w-4/5 m-auto">
         <ul>
@@ -25,7 +25,8 @@
     <form 
         action="/blog"
         method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        id="create-post-form">
         @csrf
 
         <input 
@@ -42,14 +43,20 @@
         <div class="bg-grey-lighter pt-15">
             <label class="w-44 flex flex-col items-center px-2 py-3 bg-white-rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer">
                 <span class="mt-2 text-base leading-normal">
-                    Select a file
+                    Select files (images/videos)
                 </span>
                 <input 
                     type="file"
-                    name="image"
-                    class="hidden">
+                    name="media[]"
+                    id="media-input"
+                    class="hidden"
+                    multiple
+                    accept="image/*, video/*">
             </label>
         </div>
+
+        <!-- Image Previews -->
+        <div id="media-preview" class="grid grid-cols-3 gap-4 mt-10"></div>
 
         <button    
             type="submit"
@@ -58,5 +65,38 @@
         </button>
     </form>
 </div>
+
+<!-- Add JavaScript for Image Previews -->
+<script>
+    document.getElementById('media-input').addEventListener('change', function(event) {
+        const previewContainer = document.getElementById('media-preview');
+        previewContainer.innerHTML = ''; // Clear previous previews
+
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const mediaElement = file.type.startsWith('image') 
+                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-48 object-cover rounded-lg">`
+                    : `<video controls class="w-full h-48 object-cover rounded-lg">
+                          <source src="${e.target.result}" type="${file.type}">
+                          Your browser does not support the video tag.
+                       </video>`;
+
+                const mediaContainer = document.createElement('div');
+                mediaContainer.className = 'relative';
+                mediaContainer.innerHTML = `
+                    ${mediaElement}
+                `;
+
+                previewContainer.appendChild(mediaContainer);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 
 @endsection

@@ -25,7 +25,8 @@
     <form 
         action="/blog/{{ $post->slug }}"
         method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        id="edit-post-form">
         @csrf
         @method('PUT')
 
@@ -38,14 +39,83 @@
         <textarea 
             name="description"
             placeholder="Description..."
-            class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none">{{ $post->description }}</textarea> 
+            class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none">{{ $post->description }}</textarea>
+
+        <!-- Display existing media -->
+        <div class="grid grid-cols-3 gap-4 mt-10">
+            @foreach ($post->media as $media)
+                <div class="relative">
+                    @if ($media->file_type === 'image')
+                        <img src="{{ asset('storage/' . $media->file_path) }}" alt="Post Image"
+                            class="w-full h-48 object-cover rounded-lg shadow-lg">
+                    @elseif ($media->file_type === 'video')
+                        <video controls class="w-full h-48 object-cover rounded-lg shadow-lg">
+                            <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Allow adding new media -->
+        <div class="bg-grey-lighter pt-15">
+            <label class="w-44 flex flex-col items-center px-2 py-3 bg-white-rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer">
+                <span class="mt-2 text-base leading-normal">
+                    Add more files (images/videos)
+                </span>
+                <input 
+                    type="file"
+                    name="media[]"
+                    id="media-input"
+                    class="hidden"
+                    multiple
+                    accept="image/*, video/*">
+            </label>
+        </div>
+
+        <!-- Preview new media -->
+        <div id="media-preview" class="grid grid-cols-3 gap-4 mt-10"></div>
 
         <button    
             type="submit"
             class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-            Submit Post
+            Update Post
         </button>
     </form>
 </div>
+
+<!-- JavaScript for Image Previews -->
+<script>
+    document.getElementById('media-input').addEventListener('change', function(event) {
+        const previewContainer = document.getElementById('media-preview');
+        previewContainer.innerHTML = ''; // Clear previous previews
+
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const mediaElement = file.type.startsWith('image') 
+                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-48 object-cover rounded-lg">`
+                    : `<video controls class="w-full h-48 object-cover rounded-lg">
+                          <source src="${e.target.result}" type="${file.type}">
+                          Your browser does not support the video tag.
+                       </video>`;
+
+                const mediaContainer = document.createElement('div');
+                mediaContainer.className = 'relative';
+                mediaContainer.innerHTML = `
+                    ${mediaElement}
+                `;
+
+                previewContainer.appendChild(mediaContainer);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 
 @endsection
