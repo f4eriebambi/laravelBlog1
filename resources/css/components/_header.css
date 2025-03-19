@@ -1,0 +1,28 @@
+.adminDropdown {
+    position: relative;
+    display: inline-block;
+}
+.adminDropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    right: 0;
+    min-width: 160px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.adminDropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+.adminDropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.adminDropdown:hover .adminDropdown-content {
+    display: block;
+}

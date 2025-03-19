@@ -27,9 +27,8 @@
     {{-- <div class="bg-red-500 p-4">
         Test Tailwind CSS
       </div> --}}
-    <div id="app">
-        {{-- <header class="bg-red py-10"> --}}
-            <header class="bg-red py-10 header-background">
+     <div id="app">
+        <header class="bg-red py-10 header-background">
             <div class="container mx-auto px-6">
                 <div class="header-title">
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-black no-underline meie-script-regular">
@@ -47,7 +46,14 @@
                                 <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('register') }}</a>
                             @endif
                         @else
-                            <span>{{ Auth::user()->name }}</span>
+                            <div class="adminDropdown">
+                                <span class="cursor-pointer">{{ Auth::user()->name }}</span>
+                                @if (Auth::id() === 1)
+                                    <div class="adminDropdown-content">
+                                        <a href="/blog/create">Create Post</a>
+                                    </div>
+                                @endif
+                            </div>
 
                             <a href="{{ route('logout') }}"
                                class="no-underline hover:underline"
