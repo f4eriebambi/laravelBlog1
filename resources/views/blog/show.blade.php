@@ -1,48 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-4/5 m-auto text-left">
-    <div class="py-15">
-        <h1 class="text-6xl">
-            {{ $post->title }}
-        </h1>
+    <div class="w-4/5 m-auto text-left">
+        <div class="py-15">
+            <h1 class="text-6xl">
+                {{ $post->title }}
+            </h1>
+        </div>
     </div>
-</div>
 
-<div class="w-4/5 m-auto pt-20">
-    <span class="text-gray-500">
-        By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->updated_at)) }}
-    </span>
-
-    <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
-        {{ $post->description }}
-    </p>
-</div>
-
-@if (Auth::check() && Auth::id() === 1)
     <div class="w-4/5 m-auto pt-20">
-        <a 
-            href="/blog/{{ $post->slug }}/edit"
-            class="bg-blue-500 uppercase bg-transparent text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl">
-            Edit Post
-        </a>
+        <!-- Display the image -->
+        <div class="mb-8">
+            <img src="{{ asset('images/' . $post->image_path) }}" alt="{{ $post->title }}"
+                class="w-full rounded-lg shadow-lg">
+        </div>
 
-        <form 
-            action="/blog/{{ $post->slug }}"
-            method="POST"
-            class="inline-block">
-            @csrf
-            @method('delete')
+        <span class="text-gray-500">
+            By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on
+            {{ date('jS M Y', strtotime($post->updated_at)) }}
+        </span>
 
-            <button
-    class="delete-button text-red-500 pr-3"
-    type="button"> <!-- Change type to "button" to prevent form submission -->
-    Delete
-</button>
-        </form>
+        <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
+            {{ $post->description }}
+        </p>
     </div>
-@endif
 
+    @if (Auth::check() && Auth::id() === 1)
+        <div class="w-4/5 m-auto pt-20">
+            <!-- Edit Button -->
+            <a href="/blog/{{ $post->slug }}/edit"
+                class="bg-blue-500 uppercase text-white text-xs font-extrabold py-3 px-5 rounded-3xl hover:bg-blue-600">
+                Edit Post
+            </a>
+
+            <!-- Delete Button -->
+            <form action="/blog/{{ $post->slug }}" method="POST" class="inline-block">
+                @csrf
+                @method('delete')
+
+                <button
+                    class="delete-button bg-red-500 uppercase text-white text-xs font-extrabold py-3 px-5 rounded-3xl ml-4 hover:bg-red-600"
+                    type="button">
+                    Delete
+                </button>
+            </form>
+        </div>
+    @endif
 @endsection
 
 <!-- Add this modal structure at the bottom of your file, before the closing </body> tag -->
@@ -57,7 +61,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const deleteModal = document.getElementById('deleteModal');
         const cancelDelete = document.getElementById('cancelDelete');
         const confirmDelete = document.getElementById('confirmDelete');
@@ -65,7 +69,7 @@
 
         // Open modal when delete button is clicked
         document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', function (e) {
+            button.addEventListener('click', function(e) {
                 e.preventDefault();
                 deleteForm = this.closest('form');
                 deleteModal.classList.remove('hidden');
@@ -73,12 +77,12 @@
         });
 
         // Close modal and do nothing if cancel is clicked
-        cancelDelete.addEventListener('click', function () {
+        cancelDelete.addEventListener('click', function() {
             deleteModal.classList.add('hidden');
         });
 
         // Submit the delete form if confirm is clicked
-        confirmDelete.addEventListener('click', function () {
+        confirmDelete.addEventListener('click', function() {
             deleteForm.submit();
             deleteModal.classList.add('hidden');
         });
