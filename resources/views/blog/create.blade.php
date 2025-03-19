@@ -66,15 +66,25 @@
     </form>
 </div>
 
-<!-- Add JavaScript for Image Previews -->
 <script>
+    let uploadedFiles = []; // Array to track selected files
+
     document.getElementById('media-input').addEventListener('change', function(event) {
         const previewContainer = document.getElementById('media-preview');
-        previewContainer.innerHTML = ''; // Clear previous previews
+        previewContainer.innerHTML = '';
 
-        const files = event.target.files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
+        // Add new files to the array
+        uploadedFiles = [...uploadedFiles, ...Array.from(event.target.files)];
+
+        updatePreview();
+        updateFileInput();
+    });
+
+    function updatePreview() {
+        const previewContainer = document.getElementById('media-preview');
+        previewContainer.innerHTML = '';
+
+        uploadedFiles.forEach((file, index) => {
             const reader = new FileReader();
 
             reader.onload = function(e) {
@@ -86,17 +96,39 @@
                        </video>`;
 
                 const mediaContainer = document.createElement('div');
-                mediaContainer.className = 'relative';
+                mediaContainer.className = 'relative group';
                 mediaContainer.innerHTML = `
                     ${mediaElement}
+                    <button 
+                        type="button" 
+                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onclick="removeFile(${index})"
+                    >
+                        ✕
+                    </button>
                 `;
 
                 previewContainer.appendChild(mediaContainer);
             };
 
             reader.readAsDataURL(file);
-        }
-    });
+        });
+    }
+
+    function removeFile(index) {
+        uploadedFiles.splice(index, 1); // Remove the file from the array
+        updatePreview();
+        updateFileInput();
+    }
+
+    function updateFileInput() {
+        // Convert array back to FileList
+        const dataTransfer = new DataTransfer();
+        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+        
+        // Update the file input
+        document.getElementById('media-input').files = dataTransfer.files;
+    }
 </script>
 
 @endsection
