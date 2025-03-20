@@ -39,4 +39,8 @@ Route::middleware('admin.user')->group(function () {
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::delete('/blog/media/{media}', [PostsController::class, 'deleteMedia'])->name('media.delete');
+    // Redirect legacy favicon.ico requests to new PNG
+Route::get('/favicon.ico', function () {
+    return redirect(asset('images/cherry_icon.png'));
+});
 });

@@ -9,7 +9,9 @@
 
     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <title>@yield('title', 'offduty ⋆｡☆ faerie')</title>
-    <link rel="icon" type="image/png" href="/images/cherry_icon.png">
+    <!-- Replace existing favicon link with these two lines -->
+<link rel="icon" type="image/png" href="{{ asset('images/cherry_icon.png') }}?v=2">
+<link rel="shortcut icon" href="{{ asset('images/cherry_icon.png') }}?v=2">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
