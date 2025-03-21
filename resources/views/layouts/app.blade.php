@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +11,12 @@
     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <title>@yield('title', 'offduty ⋆｡☆ faerie')</title>
     <!-- Replace existing favicon link with these two lines -->
-<link rel="icon" type="image/png" href="{{ asset('images/cherry_icon.png') }}?v=2">
-<link rel="shortcut icon" href="{{ asset('images/cherry_icon.png') }}?v=2">
+    <link rel="icon" type="image/png" href="{{ asset('images/cherry_icon.png') }}?v=2">
+    <link rel="shortcut icon" href="{{ asset('images/cherry_icon.png') }}?v=2">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,17 +24,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Meie+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     {{-- <div class="bg-red-500 p-4">
         Test Tailwind CSS
       </div> --}}
-     <div id="app">
-        <header class="bg-red py-10 header-background">
+    <div id="app">
+        <div class="spotify-player">
+            <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/7rVvBkg9ltTrEdUiFAvYIh?utm_source=generator" width="100%"
+                height="352" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+            <div id="play-message" class="text-center text-sm text-gray-600 py-2">
+                Click the play button to start the music! For full playback (premium accounts only),</br>
+                <a id="spotify-login" href="https://accounts.spotify.com/login" target="_blank"
+                    class="text-blue-600 hover:underline">Log in to Spotify ⊹ ࣪ ˖</a>
+            </div>
+            <!-- Transparent Overlay -->
+            <div id="player-overlay" class="absolute inset-0"></div>
+        </div>
+        <header class="bg-red py-10 header-background mt-20">
             <div class="container mx-auto px-6">
                 <div class="header-title">
-                    <a href="{{ url('/') }}" class="text-lg font-semibold text-black no-underline meie-script-regular">
+                    <a href="{{ url('/') }}"
+                        class="text-lg font-semibold text-black no-underline meie-script-regular">
                         offduty ⋆｡☆ faerie
                     </a>
                 </div>
@@ -45,7 +64,8 @@
                         @guest
                             <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('login') }}</a>
                             @if (Route::has('register'))
-                                <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('register') }}</a>
+                                <a class="no-underline hover:underline"
+                                    href="{{ route('register') }}">{{ __('register') }}</a>
                             @endif
                         @else
                             <div class="adminDropdown">
@@ -57,9 +77,8 @@
                                 @endif
                             </div>
 
-                            <a href="{{ route('logout') }}"
-                               class="no-underline hover:underline"
-                               onclick="event.preventDefault();
+                            <a href="{{ route('logout') }}" class="no-underline hover:underline"
+                                onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">{{ __('logout') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 {{ csrf_field() }}
@@ -77,6 +96,55 @@
         <div>
             @include('layouts.footer')
         </div>
+        {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.querySelector('.spotify-player iframe');
+            if (iframe) {
+                iframe.contentWindow.postMessage('{"command":"play"}', '*');
+            }
+        });
+    </script> --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const playMessage = document.getElementById('play-message');
+                const loginLink = document.getElementById('spotify-login');
+
+                // Check if the user has already closed the Spotify login window during this session
+                if (sessionStorage.getItem('spotifyLoginClosed')) {
+                    // Hide the play message if the flag exists
+                    if (playMessage) {
+                        playMessage.style.display = 'none';
+                    }
+                } else {
+                    // Hide the play message after 5 seconds (if the login window hasn't been closed yet)
+                    if (playMessage) {
+                        setTimeout(function() {
+                            playMessage.style.display = 'none';
+                        }, 5000); // 5 seconds
+                    }
+                }
+
+                if (loginLink) {
+                    loginLink.addEventListener('click', function(e) {
+                        e.preventDefault(); // Prevent the default link behavior
+                        const loginWindow = window.open(loginLink.href, 'Spotify Login',
+                            'width=500,height=600');
+
+                        // Check if the login window is closed
+                        const checkWindowClosed = setInterval(function() {
+                            if (loginWindow.closed) {
+                                clearInterval(checkWindowClosed); // Stop checking
+                                // Set a flag in sessionStorage to indicate the window was closed
+                                sessionStorage.setItem('spotifyLoginClosed', 'true');
+                                // Refresh the page
+                                window.location.reload();
+                            }
+                        }, 500); // Check every 500ms
+                    });
+                }
+            });
+        </script>
     </div>
 </body>
+
 </html>
