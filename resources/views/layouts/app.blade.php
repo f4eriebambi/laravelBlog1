@@ -30,7 +30,15 @@
         Test Tailwind CSS
       </div> --}}
      <div id="app">
-        <header class="bg-red py-10 header-background">
+        <div class="spotify-player">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7rVvBkg9ltTrEdUiFAvYIh?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div id="play-message" class="text-center text-sm text-gray-600 py-2">
+                Click the play button to start the music!
+            </div>
+            <!-- Transparent Overlay -->
+            <div id="player-overlay" class="absolute inset-0"></div>
+        </div>
+        <header class="bg-red py-10 header-background mt-20">
             <div class="container mx-auto px-6">
                 <div class="header-title">
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-black no-underline meie-script-regular">
@@ -77,6 +85,26 @@
         <div>
             @include('layouts.footer')
         </div>
+        {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.querySelector('.spotify-player iframe');
+            if (iframe) {
+                iframe.contentWindow.postMessage('{"command":"play"}', '*');
+            }
+        });
+    </script> --}}
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const playMessage = document.getElementById('play-message');
+
+        if (playMessage) {
+            // Hide the message after 5 seconds (assuming user will interact with player)
+            setTimeout(function() {
+                playMessage.style.display = 'none';
+            }, 5000); 
+        }
+    });
+</script>
     </div>
 </body>
 </html>
