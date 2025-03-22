@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Perfume Mixer</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="container mx-auto p-6">
@@ -15,21 +17,23 @@
         </div>
 
         <!-- Fragrance Notes -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            @foreach($notes as $note)
-                <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors" data-note-id="{{ $note->id }}" data-color="{{ $note->category->color }}" data-description="{{ $note->category->description }}">
-                    <p class="text-lg font-semibold text-gray-800">{{ $note->name }}</p>
-                    <p class="text-sm text-gray-500">{{ $note->category->description }}</p>
-                </div>
-            @endforeach
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    @foreach($notes as $note)
+        <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors" data-note-id="{{ $note->id }}" data-color="{{ $note->category->color }}" data-description="{{ $note->category->description }}">
+            <p class="text-lg font-semibold text-gray-800">{{ $note->name }}</p>
+            <!-- Remove the description here -->
         </div>
+    @endforeach
+</div>
 
-        <!-- Perfume Bottle -->
-        <div class="flex justify-center mb-8">
-            <div class="perfume-bottle w-32 h-64 bg-gray-200 rounded-lg relative overflow-hidden">
-                <div class="fill absolute bottom-0 left-0 right-0 transition-all duration-500" style="height: 0%; background: linear-gradient(to bottom, transparent);"></div>
-            </div>
-        </div>
+<!-- Perfume Bottle and Description -->
+<div class="flex justify-center mb-8">
+    <div class="perfume-bottle w-32 h-64 bg-gray-200 rounded-lg relative overflow-hidden">
+        <div class="fill absolute bottom-0 left-0 right-0 transition-all duration-500" style="height: 0%; background: linear-gradient(to bottom, transparent);"></div>
+    </div>
+    <!-- Add a new section for category descriptions -->
+    <div id="category-description" class="ml-4 text-gray-700 italic"></div>
+</div>
 
         <!-- Scent Description -->
         <div class="text-center mb-8">
@@ -78,60 +82,102 @@
         const maxNotes = 3;
 
         // Add Note
-        document.querySelectorAll('.note').forEach(note => {
-            note.addEventListener('click', () => {
-                if (notes.length < maxNotes) {
-                    const noteId = note.dataset.noteId;
-                    const noteName = note.querySelector('p').textContent;
-                    const noteColor = note.dataset.color;
-                    const noteDescription = note.dataset.description;
+document.querySelectorAll('.note').forEach(note => {
+    note.addEventListener('click', () => {
+        if (notes.length < maxNotes) {
+            const noteId = note.dataset.noteId;
+            const noteName = note.querySelector('p').textContent;
+            const noteColor = note.dataset.color;
+            const noteDescription = note.dataset.description;
 
-                    notes.push({ id: noteId, name: noteName, color: noteColor, description: noteDescription });
+            notes.push({ id: noteId, name: noteName, color: noteColor, description: noteDescription });
 
-                    // Update bottle fill
-                    const bottleFill = document.querySelector('.perfume-bottle .fill');
-                    const currentColors = bottleFill.style.background.match(/rgba?\([^)]+\)/g) || [];
-                    currentColors.push(noteColor);
-                    bottleFill.style.background = `linear-gradient(to bottom, ${currentColors.join(', ')})`;
-                    bottleFill.style.height = `${(notes.length / maxNotes) * 100}%`;
+            // Update bottle fill
+            const bottleFill = document.querySelector('.perfume-bottle .fill');
+            const currentColors = bottleFill.style.background.match(/rgba?\([^)]+\)/g) || [];
+            currentColors.push(noteColor);
+            bottleFill.style.background = `linear-gradient(to bottom, ${currentColors.join(', ')})`;
+            bottleFill.style.height = `${(notes.length / maxNotes) * 100}%`;
 
-                    // Update scent description
-                    const scentDescription = document.getElementById('scent-description');
-                    scentDescription.textContent = `Your fragrance unfolds with whispers of ${notes.map(n => n.name).join(', ')}—a symphony of scent crafted just for you.`;
+            // Update category description
+            const categoryDescription = document.getElementById('category-description');
+            categoryDescription.textContent = noteDescription;
+
+            // Hide the category description after 5 seconds
+            setTimeout(() => {
+                categoryDescription.textContent = '';
+            }, 2000);
+
+            // Update scent description
+            const scentDescription = document.getElementById('scent-description');
+            scentDescription.textContent = `Your fragrance unfolds with whispers of ${notes.map(n => n.name).join(', ')}—a symphony of scent crafted just for you.`;
+        }
+    });
+});
+
+       // Mix Button
+document.getElementById('mix-button').addEventListener('click', () => {
+    if (notes.length === maxNotes) {
+        fetch('/perfume-mixer/mix', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ notes: notes.map(n => n.name) }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong in the lab… Let\'s try that again!',
+                });
+            } else if (data.custom) {
+                // Display custom blend
+                document.getElementById('custom-blend').classList.remove('hidden');
+                document.getElementById('custom-name').textContent = data.name;
+                document.getElementById('custom-notes').textContent = data.notes;
+                document.getElementById('recommended-perfume').classList.add('hidden');
+            } else {
+                // Display recommended perfume
+                document.getElementById('recommended-perfume').classList.remove('hidden');
+                document.getElementById('perfume-image').src = data.image;
+                document.getElementById('buy-link').href = data.buy_link;
+                document.getElementById('perfume-name-text').textContent = data.name;
+                document.getElementById('scent-description').textContent = data.description;
+                document.getElementById('custom-blend').classList.add('hidden');
+
+                // Show partial match modal if applicable
+                if (data.partial_match) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Close Enough!',
+                        text: "A near-perfect potion! While this isn't an exact match, we think you'll adore this fragrance—it carries the essence of your creation.",
+                        confirmButtonText: 'Got it!',
+                    });
                 }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Uh-oh! It looks like the magic fizzled out. Try again, and let\'s mix up something beautiful.',
             });
         });
-
-        // Mix Button
-        document.getElementById('mix-button').addEventListener('click', () => {
-            if (notes.length === maxNotes) {
-                fetch('/perfume-mixer/mix', {
-                    method: 'POST',
-                    headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ notes: notes.map(n => n.name) }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.custom) {
-                        // Display custom blend
-                        document.getElementById('custom-blend').classList.remove('hidden');
-                        document.getElementById('custom-name').textContent = data.name;
-                        document.getElementById('custom-notes').textContent = data.notes;
-                        document.getElementById('recommended-perfume').classList.add('hidden');
-                    } else {
-                        // Display recommended perfume
-                        document.getElementById('recommended-perfume').classList.remove('hidden');
-                        document.getElementById('perfume-image').src = data.image; // Use the image path from the database
-                        document.getElementById('buy-link').href = data.buy_link;
-                        document.getElementById('perfume-name-text').textContent = data.name;
-                        document.getElementById('scent-description').textContent = data.description;
-                        document.getElementById('custom-blend').classList.add('hidden');
-                    }
-                });
-            } else {
-                alert('Please select exactly 3 notes to mix.');
-            }
+    } else {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Not Enough Notes',
+            text: 'Your fragrance story needs more depth! Pick exactly three notes to craft your perfect blend.',
         });
+    }
+});
 
         // Restart Button
         document.getElementById('restart-button').addEventListener('click', () => {

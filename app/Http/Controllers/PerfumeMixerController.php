@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FragranceNote;
 use App\Models\PerfumeRecommendation;
 use App\Models\UserBlend;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PerfumeMixerController extends Controller
 {
-     /**
+    /**
      * Display the perfume mixer page.
      *
      * @return \Illuminate\View\View
@@ -33,48 +34,69 @@ class PerfumeMixerController extends Controller
      */
     public function mix(Request $request)
     {
-        // Get the selected notes from the request
-        $selectedNotes = $request->notes; // e.g., ["Rose", "Bergamot", "Vanilla"]
-        $recommendedPerfume = null;
+        try {
+            // Get the selected notes from the request
+            $selectedNotes = $request->notes;
+            $recommendedPerfume = null;
 
-        // Try to find a perfect match
-        $recommendedPerfume = PerfumeRecommendation::where('notes', 'like', "%{$selectedNotes[0]}%")
-            ->where('notes', 'like', "%{$selectedNotes[1]}%")
-            ->where('notes', 'like', "%{$selectedNotes[2]}%")
-            ->first();
+            // Log the selected notes for debugging
+            Log::info('Selected Notes:', $selectedNotes);
 
-        // If no perfect match, find the closest match
-        if (!$recommendedPerfume) {
-            $recommendedPerfume = PerfumeRecommendation::where(function ($query) use ($selectedNotes) {
+            // Try to find a perfect match
+            $recommendedPerfume = PerfumeRecommendation::where('notes', 'like', "%{$selectedNotes[0]}%")
+                ->where('notes', 'like', "%{$selectedNotes[1]}%")
+                ->where('notes', 'like', "%{$selectedNotes[2]}%")
+                ->first();
+
+            // Log the perfect match result
+            Log::info('Perfect Match:', [$recommendedPerfume]);
+
+            // If no perfect match, find the closest match
+            $partialMatch = false;
+            if (!$recommendedPerfume) {
+                $query = PerfumeRecommendation::query();
                 foreach ($selectedNotes as $note) {
-                    $query->orWhere('notes', 'like', "%{$note}%");
+                    $query->orWhere('notes', 'like', "%$note%");
                 }
-            })->orderByRaw(
-                "CASE
-                    WHEN notes LIKE '%{$selectedNotes[0]}%' THEN 1 ELSE 0 END +
-                CASE
-                    WHEN notes LIKE '%{$selectedNotes[1]}%' THEN 1 ELSE 0 END +
-                CASE
-                    WHEN notes LIKE '%{$selectedNotes[2]}%' THEN 1 ELSE 0 END"
-            , 'DESC')->first();
-        }
 
-        // If still no match, generate a custom blend
-        if (!$recommendedPerfume) {
+                // Build the order by clause dynamically
+                $orderByClause = implode(' + ', array_map(function ($note) {
+                    return "CASE WHEN notes LIKE '%$note%' THEN 1 ELSE 0 END";
+                }, $selectedNotes));
+
+                $recommendedPerfume = $query->orderByRaw($orderByClause . ' DESC')->first();
+                $partialMatch = true; // Set partial match flag
+
+                // Log the closest match result
+                Log::info('Closest Match:', [$recommendedPerfume]);
+            }
+
+            // If still no match, generate a custom blend
+            if (!$recommendedPerfume) {
+                Log::info('No Match Found. Generating Custom Blend.');
+                return response()->json([
+                    'custom' => true,
+                    'name' => $this->generatePerfumeName($selectedNotes),
+                    'notes' => implode(', ', $selectedNotes),
+                ]);
+            }
+
+            // Return the recommended perfume details
+            Log::info('Recommended Perfume:', [$recommendedPerfume]);
             return response()->json([
-                'custom' => true,
-                'name' => $this->generatePerfumeName($selectedNotes),
-                'notes' => implode(', ', $selectedNotes),
+                'image' => $recommendedPerfume->image,
+                'buy_link' => $recommendedPerfume->buy_link,
+                'name' => $recommendedPerfume->name,
+                'description' => $recommendedPerfume->description,
+                'partial_match' => $partialMatch, // Add partial match flag
             ]);
+        } catch (\Exception $e) {
+            // Log the error and return a user-friendly message
+            Log::error('Error in PerfumeMixerController: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'An error occurred while processing your request. Please try again.',
+            ], 500);
         }
-
-        // Return the recommended perfume details
-        return response()->json([
-            'image' => $recommendedPerfume->image,
-            'buy_link' => $recommendedPerfume->buy_link,
-            'name' => $recommendedPerfume->name,
-            'description' => $recommendedPerfume->description,
-        ]);
     }
 
     /**
