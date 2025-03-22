@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\FragranceNote;
-// use App\Models\PerfumeRecommendation;
-// use App\Models\UserBlend;
+use App\Models\FragranceNote;
+use App\Models\PerfumeRecommendation;
+use App\Models\UserBlend;
 use Illuminate\Support\Facades\Auth;
 
 class PerfumeMixerController extends Controller
@@ -22,7 +22,7 @@ class PerfumeMixerController extends Controller
         $notes = FragranceNote::with('category')->get();
 
         // Pass the notes to the view
-        return view('perfume-mixer', compact('notes'));
+        return view('special-feature.perfume-mixer', compact('notes'));
     }
 
     /**
