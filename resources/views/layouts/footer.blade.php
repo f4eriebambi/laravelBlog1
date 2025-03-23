@@ -15,10 +15,10 @@
 
             <!-- About, Blog, Orabella, Vogue -->
             <div class="flex space-x-6">
-                <a href="/about" class="text-gray-400 hover:text-white">About</a>
+                <a href="/about" class="text-gray-400 hover:text-white" target="_blank">About</a>
                 <a href="/blog" class="text-gray-400 hover:text-white">Blog</a>
-                <a href="https://orebella.com/" class="text-gray-400 hover:text-white">Orabella</a>
-                <a href="https://www.vogue.com/" class="text-gray-400 hover:text-white">Vogue</a>
+                <a href="https://orebella.com/" class="text-gray-400 hover:text-white" target="_blank">Orabella</a>
+                <a href="https://www.vogue.com/" class="text-gray-400 hover:text-white" target="_blank">Vogue</a>
             </div>
 
             <!-- Social Media Icons -->

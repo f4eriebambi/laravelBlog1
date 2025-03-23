@@ -1,0 +1,219 @@
+.perfume-mixer-background {
+    background-image: url("https://t3.ftcdn.net/jpg/05/39/34/52/360_F_539345238_dEtz74PIcpOXR0rujpgeH0OjuDlVBvQQ.jpg");
+    background-position: center;
+}
+
+/* Smooth transition for note description */
+#category-description {
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(10px);
+}
+
+#category-description.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Perfume Bottle Container */
+.perfume-bottle-container {
+    width: 128px;
+    height: 256px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fill Layer */
+.perfume-bottle-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, transparent, var(--fill-color));
+    transition: height 0.5s ease, background 0.5s ease;
+    z-index: 1;
+}
+
+/* Bottle Image */
+.perfume-bottle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* Notes Grid */
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Individual Note */
+.note {
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.note:hover {
+    background-color: #f9fafb;
+}
+
+/* Perfume Modal Button */
+.perfumeRec-modal-button {
+    --border-width: clamp(1px, 0.0625em, 4px);
+    all: unset;
+    cursor: pointer;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    pointer-events: auto;
+    z-index: 3;
+    background: linear-gradient(
+        -75deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.05)
+    );
+    border-radius: 999vw;
+    box-shadow: inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+        0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+        0 0 0 0 rgba(255, 255, 255, 1);
+    backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+    transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 12px 24px; /* Added padding for better spacing */
+}
+
+.perfumeRec-modal-button:hover {
+    transform: scale(0.975);
+    backdrop-filter: blur(0.01em);
+    box-shadow: inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+        0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+        0 0 0 0 rgba(255, 255, 255, 1);
+}
+
+/* Button Text */
+.perfumeRec-modal-button span {
+    position: relative;
+    display: block;
+    user-select: none;
+    font-family: "Inter", sans-serif;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+    font-size: 1em;
+    color: rgba(50, 50, 50, 1);
+    text-shadow: 0em 0.25em 0.05em rgba(0, 0, 0, 0.1);
+    transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    padding-inline: 1.5em; /* Adjusted padding */
+    padding-block: 0.875em; /* Adjusted padding */
+}
+
+.perfumeRec-modal-button:hover span {
+    text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+}
+
+/* Text Highlight */
+.perfumeRec-modal-button span::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    width: calc(100% - var(--border-width));
+    height: calc(100% - var(--border-width));
+    top: calc(0% + var(--border-width) / 2);
+    left: calc(0% + var(--border-width) / 2);
+    box-sizing: border-box;
+    border-radius: 999vw;
+    overflow: clip;
+    background: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 40% 50%,
+        rgba(255, 255, 255, 0) 55%
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    transition: background-position 500ms cubic-bezier(0.25, 1, 0.5, 1),
+        -45deg 500ms ease;
+}
+
+.perfumeRec-modal-button:hover span::after {
+    background-position: 25% 50%;
+}
+
+.perfumeRec-modal-button:active span::after {
+    background-position: 50% 15%;
+}
+
+/* Outline */
+.perfumeRec-modal-button::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: 999vw;
+    width: calc(100% + var(--border-width));
+    height: calc(100% + var(--border-width));
+    top: calc(0% - var(--border-width) / 2);
+    left: calc(0% - var(--border-width) / 2);
+    padding: var(--border-width);
+    box-sizing: border-box;
+    background: conic-gradient(
+            from -75deg at 50% 50%,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0) 5% 40%,
+            rgba(0, 0, 0, 0.5) 50%,
+            rgba(0, 0, 0, 0) 60% 95%,
+            rgba(0, 0, 0, 0.5)
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.5),
+            rgba(255, 255, 255, 0.5)
+        );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: inset 0 0 0 calc(var(--border-width) / 2)
+        rgba(255, 255, 255, 0.5);
+}
+
+.perfumeRec-modal-button:hover::after {
+    background: conic-gradient(
+        from -125deg at 50% 50%,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0) 5% 40%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0) 60% 95%,
+        rgba(0, 0, 0, 0.5)
+    );
+}
+
+.perfumeRec-modal-button:active::after {
+    background: conic-gradient(
+        from -75deg at 50% 50%,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0) 5% 40%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0) 60% 95%,
+        rgba(0, 0, 0, 0.5)
+    );
+}

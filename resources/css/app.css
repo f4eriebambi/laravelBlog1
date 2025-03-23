@@ -1,6 +1,7 @@
 @import "components/_login.css";
 @import "components/_register.css";
 @import "components/_header.css";
+@import "pages/_virtual-perfume-mix.css";
 
 @tailwind base;
 @tailwind components;
@@ -62,6 +63,8 @@
 .header-background {
     /* background-color: red; */
     background-image: url("/images/sade.jpg");
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .header-container {
@@ -468,7 +471,7 @@
 
 .footer-background {
     background-color: #efefef;
-    padding: 3rem;
+    padding: 1.5rem;
     box-shadow: 0 0 5px 0 rgb(213 213 213 / 80%),
         0 2px 4px 0 rgba(13, 9, 51, 0.2);
 }
