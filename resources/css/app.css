@@ -2,6 +2,7 @@
 @import "components/_register.css";
 @import "components/_header.css";
 @import "pages/_virtual-perfume-mix.css";
+@import "pages/_blog.css";
 
 @tailwind base;
 @tailwind components;

@@ -148,8 +148,8 @@
                     } else if (data.custom) {
                         // Use SweetAlert2 for custom blends
                         Swal.fire({
-                            title: 'Your Custom Blend',
-                            text: 'Your creation is pure magic!',
+                            title: 'A Fragrance Born from You',
+                            text: 'Your essence, bottled in perfection.',
                             html: `
                                 <p>⠀⠀⠀⢸⣦⡀⠀⠀⠀⠀⢀⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⢸⣏⠻⣶⣤⡶⢾⡿⠁⠀⢠⣄⡀⢀⣴⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -178,7 +178,7 @@
                     } else if (data.partial_match) {
                         // Use SweetAlert2 for partial matches
                         Swal.fire({
-    title: 'A near-perfect potion!',
+    title: 'A Whisper Away from Perfection ✦!',
     imageUrl: data.image, // Use the image URL from the response
     imageAlt: 'Recommended Perfume',
     html: `
@@ -200,7 +200,7 @@
                     } else {
                         // Use SweetAlert2 for recommended perfumes
                         Swal.fire({
-                            title: 'A perfect match !', // Perfume name
+                            title: 'Perfection Captured in a Bottle', // Perfume name
                             text: data.description, // Perfume description 
                             imageUrl: data.image, // Use the image URL from the response
                             imageAlt: 'Recommended Perfume',

@@ -30,10 +30,8 @@
 </head>
 
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
-    {{-- <div class="bg-red-500 p-4">
-        Test Tailwind CSS
-      </div> --}}
     <div id="app">
+        <!-- Spotify Player -->
         <div class="spotify-player">
             <iframe style="border-radius:12px"
                 src="https://open.spotify.com/embed/playlist/7rVvBkg9ltTrEdUiFAvYIh?utm_source=generator" width="100%"
@@ -48,6 +46,22 @@
             <!-- Transparent Overlay -->
             <div id="player-overlay" class="absolute inset-0"></div>
         </div>
+
+        <!-- Sidenav -->
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Page 1 (WIP)</a>
+            <a href="#">Page 2 (WIP)</a>
+            <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
+            <a href="/contact">A Message for Me?</a>
+        </div>
+
+        <!-- Sidenav Toggle Button -->
+<div class="sidenav-toggle" onclick="openNav()">
+    <span class="hamburger-icon">&#9776;</span>
+</div>
+
+        <!-- Header -->
         <header class="header-background mt-20">
             <div class="container mx-auto px-6">
                 <div class="header-title">
@@ -96,55 +110,62 @@
         <div>
             @include('layouts.footer')
         </div>
-        {{-- <script>
+    </div>
+
+    <!-- Sidenav Script -->
+    <script>
+        function openNav() {
+    document.getElementById("mySidenav").style.width = "100%";
+    document.querySelector(".sidenav-toggle").style.display = "none"; // Hide the icon
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.querySelector(".sidenav-toggle").style.display = "flex"; // Show the icon
+}
+    </script>
+
+    <!-- Spotify Player Script -->
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const iframe = document.querySelector('.spotify-player iframe');
-            if (iframe) {
-                iframe.contentWindow.postMessage('{"command":"play"}', '*');
+            const playMessage = document.getElementById('play-message');
+            const loginLink = document.getElementById('spotify-login');
+
+            // Check if the user has already closed the Spotify login window during this session
+            if (sessionStorage.getItem('spotifyLoginClosed')) {
+                // Hide the play message if the flag exists
+                if (playMessage) {
+                    playMessage.style.display = 'none';
+                }
+            } else {
+                // Hide the play message after 5 seconds (if the login window hasn't been closed yet)
+                if (playMessage) {
+                    setTimeout(function() {
+                        playMessage.style.display = 'none';
+                    }, 5000); // 5 seconds
+                }
+            }
+
+            if (loginLink) {
+                loginLink.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default link behavior
+                    const loginWindow = window.open(loginLink.href, 'Spotify Login',
+                        'width=500,height=600');
+
+                    // Check if the login window is closed
+                    const checkWindowClosed = setInterval(function() {
+                        if (loginWindow.closed) {
+                            clearInterval(checkWindowClosed); // Stop checking
+                            // Set a flag in sessionStorage to indicate the window was closed
+                            sessionStorage.setItem('spotifyLoginClosed', 'true');
+                            // Refresh the page
+                            window.location.reload();
+                        }
+                    }, 500); // Check every 500ms
+                });
             }
         });
-    </script> --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const playMessage = document.getElementById('play-message');
-                const loginLink = document.getElementById('spotify-login');
-
-                // Check if the user has already closed the Spotify login window during this session
-                if (sessionStorage.getItem('spotifyLoginClosed')) {
-                    // Hide the play message if the flag exists
-                    if (playMessage) {
-                        playMessage.style.display = 'none';
-                    }
-                } else {
-                    // Hide the play message after 5 seconds (if the login window hasn't been closed yet)
-                    if (playMessage) {
-                        setTimeout(function() {
-                            playMessage.style.display = 'none';
-                        }, 5000); // 5 seconds
-                    }
-                }
-
-                if (loginLink) {
-                    loginLink.addEventListener('click', function(e) {
-                        e.preventDefault(); // Prevent the default link behavior
-                        const loginWindow = window.open(loginLink.href, 'Spotify Login',
-                            'width=500,height=600');
-
-                        // Check if the login window is closed
-                        const checkWindowClosed = setInterval(function() {
-                            if (loginWindow.closed) {
-                                clearInterval(checkWindowClosed); // Stop checking
-                                // Set a flag in sessionStorage to indicate the window was closed
-                                sessionStorage.setItem('spotifyLoginClosed', 'true');
-                                // Refresh the page
-                                window.location.reload();
-                            }
-                        }, 500); // Check every 500ms
-                    });
-                }
-            });
-        </script>
-    </div>
+    </script>
 </body>
 
 </html>

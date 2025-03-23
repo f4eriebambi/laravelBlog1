@@ -44,13 +44,14 @@
             </a>
 
             <!-- Delete Button -->
-            <form action="/blog/{{ $post->slug }}" method="POST" class="inline-block">
+            <form action="/blog/{{ $post->slug }}" method="POST" class="inline-block" id="deleteForm">
                 @csrf
                 @method('delete')
 
                 <button
                     class="delete-button bg-red-500 uppercase text-white text-xs font-extrabold py-3 px-5 rounded-3xl ml-4 hover:bg-red-600"
-                    type="button">
+                    type="button"
+                    onclick="confirmDelete()">
                     Delete
                 </button>
             </form>
@@ -58,42 +59,27 @@
     @endif
 @endsection
 
-<!-- Add this modal structure at the bottom of your file, before the closing </body> tag -->
-<div id="deleteModal" class="fixed z-50 inset-0 hidden bg-black bg-opacity-50 justify-center items-center">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <p class="text-lg font-semibold mb-4">Are you sure you want to delete this post?</p>
-        <div class="flex justify-end space-x-4">
-            <button id="cancelDelete" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-            <button id="confirmDelete" class="bg-red-500 text-white px-4 py-2 rounded">Yes, Delete</button>
-        </div>
-    </div>
-</div>
-
+<!-- Add SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteModal = document.getElementById('deleteModal');
-        const cancelDelete = document.getElementById('cancelDelete');
-        const confirmDelete = document.getElementById('confirmDelete');
-        let deleteForm = null;
-
-        // Open modal when delete button is clicked
-        document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                deleteForm = this.closest('form');
-                deleteModal.classList.remove('hidden');
-            });
+    function confirmDelete() {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm').submit(); // Submit the form
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your post has been deleted.",
+                    icon: "success"
+                });
+            }
         });
-
-        // Close modal and do nothing if cancel is clicked
-        cancelDelete.addEventListener('click', function() {
-            deleteModal.classList.add('hidden');
-        });
-
-        // Submit the delete form if confirm is clicked
-        confirmDelete.addEventListener('click', function() {
-            deleteForm.submit();
-            deleteModal.classList.add('hidden');
-        });
-    });
+    }
 </script>
