@@ -1,1 +1,276 @@
-/* for css to do with the blog post pages */
+/* Background Image */
+    .form-background::before {
+        content: "";
+        background-image: url("https://i.pinimg.com/736x/81/1a/37/811a378c4aa565da8c112ff5ba595b4e.jpg");
+        background-position: center center; /* Keeps the image centered */
+        background-repeat: repeat; /* Ensures the image repeats */
+        background-size: auto; /* Preserves the original image size */
+        position: fixed; /* Makes the pseudo-element fixed */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Ensures the background is behind the content */
+        opacity: 0.2; /* Adjust opacity for better readability */
+    }
+    
+/* Media Upload Container */
+.media-upload-container {
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 5px;
+    background-color: rgba(255, 255, 255, 0.1); /* Light background */
+    margin-bottom: 1rem;
+}
+
+.media-upload-header {
+    flex: 1;
+    width: 100%;
+    border: 2px dashed #444e71; /* Purple border to match your aesthetic */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.media-upload-header svg {
+    height: 100px;
+    color: #444e71; /* Purple icon color */
+}
+
+.media-upload-header p {
+    text-align: center;
+    color: #444e71; /* Purple text color */
+}
+
+.media-upload-footer {
+    background-color: rgba(133, 133, 142, 0.049); /* Light purple background */
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #444e71; /* Purple text color */
+    border: none;
+}
+
+.media-upload-footer svg {
+    height: 130%;
+    fill: #444e71; /* Purple icon color */
+    background-color: rgba(229, 228, 241, 0); /* Light purple background */
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+}
+
+.media-upload-footer p {
+    flex: 1;
+    text-align: center;
+}
+
+    /* Button Wrap Container */
+    .button-wrap {
+        position: relative;
+        z-index: 2;
+        border-radius: 999vw;
+        background: transparent;
+        pointer-events: none;
+        transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    /* Button Shadow Container */
+    .button-shadow {
+        --shadow-cuttoff-fix: 2em;
+        position: absolute;
+        width: calc(100% + var(--shadow-cuttoff-fix));
+        height: calc(100% + var(--shadow-cuttoff-fix));
+        top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+        left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+        filter: blur(clamp(2px, 0.125em, 12px));
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    /* Shadow */
+    .button-shadow::after {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        border-radius: 999vw;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+        width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+        height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+        top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+        left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+        padding: 0.125em;
+        box-sizing: border-box;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+        opacity: 1;
+    }
+
+    /* Button Base Styles */
+    .custom-submit-button {
+        --border-width: clamp(1px, 0.0625em, 4px);
+        all: unset;
+        cursor: pointer;
+        position: relative;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        pointer-events: auto;
+        z-index: 3;
+        background: linear-gradient(
+            -75deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.05)
+        );
+        border-radius: 999vw;
+        box-shadow: inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+            inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+            0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+            0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+            0 0 0 0 rgba(255, 255, 255, 1);
+        backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+        transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .custom-submit-button:hover {
+        transform: scale(0.975);
+        backdrop-filter: blur(0.01em);
+        box-shadow: inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+            inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+            0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+            0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+            0 0 0 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Button Text */
+    .custom-submit-button span {
+        position: relative;
+        display: block;
+        user-select: none;
+        font-family: "Inter", sans-serif;
+        letter-spacing: -0.05em;
+        font-weight: 500;
+        font-size: 1em;
+        color: rgba(50, 50, 50, 1);
+        text-shadow: 0em 0.25em 0.05em rgba(0, 0, 0, 0.1);
+        transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+        padding-inline: 1.5em;
+        padding-block: 0.875em;
+    }
+
+    .custom-submit-button:hover span {
+        text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+    }
+
+    /* Text Highlight */
+    .custom-submit-button span::after {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 1;
+        width: calc(100% - var(--border-width));
+        height: calc(100% - var(--border-width));
+        top: calc(0% + var(--border-width) / 2);
+        left: calc(0% + var(--border-width) / 2);
+        box-sizing: border-box;
+        border-radius: 999vw;
+        overflow: clip;
+        background: linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.5) 40% 50%,
+            rgba(255, 255, 255, 0) 55%
+        );
+        mix-blend-mode: screen;
+        pointer-events: none;
+        background-size: 200% 200%;
+        background-position: 0% 50%;
+        background-repeat: no-repeat;
+        transition: background-position 500ms cubic-bezier(0.25, 1, 0.5, 1),
+            -45deg 500ms ease;
+    }
+
+    .custom-submit-button:hover span::after {
+        background-position: 25% 50%;
+    }
+
+    .custom-submit-button:active span::after {
+        background-position: 50% 15%;
+    }
+
+    /* Outline */
+    .custom-submit-button::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        border-radius: 999vw;
+        width: calc(100% + var(--border-width));
+        height: calc(100% + var(--border-width));
+        top: calc(0% - var(--border-width) / 2);
+        left: calc(0% - var(--border-width) / 2);
+        padding: var(--border-width);
+        box-sizing: border-box;
+        background: conic-gradient(
+                from -75deg at 50% 50%,
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0) 5% 40%,
+                rgba(0, 0, 0, 0.5) 50%,
+                rgba(0, 0, 0, 0) 60% 95%,
+                rgba(0, 0, 0, 0.5)
+            ),
+            linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.5),
+                rgba(255, 255, 255, 0.5)
+            );
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow: inset 0 0 0 calc(var(--border-width) / 2)
+            rgba(255, 255, 255, 0.5);
+    }
+
+    .custom-submit-button:hover::after {
+        background: conic-gradient(
+            from -125deg at 50% 50%,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0) 5% 40%,
+            rgba(0, 0, 0, 0.5) 50%,
+            rgba(0, 0, 0, 0) 60% 95%,
+            rgba(0, 0, 0, 0.5)
+        );
+    }
+
+    .custom-submit-button:active::after {
+        background: conic-gradient(
+            from -75deg at 50% 50%,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0) 5% 40%,
+            rgba(0, 0, 0, 0.5) 50%,
+            rgba(0, 0, 0, 0) 60% 95%,
+            rgba(0, 0, 0, 0.5)
+        );
+    }
