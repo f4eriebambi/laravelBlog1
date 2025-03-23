@@ -48,7 +48,7 @@
             <!-- Transparent Overlay -->
             <div id="player-overlay" class="absolute inset-0"></div>
         </div>
-        <header class="bg-red py-10 header-background mt-20">
+        <header class="header-background mt-20">
             <div class="container mx-auto px-6">
                 <div class="header-title">
                     <a href="{{ url('/') }}"

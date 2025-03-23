@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PerfumeMixerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,12 @@ Route::middleware('admin.user')->group(function () {
 Route::get('/favicon.ico', function () {
     return redirect(asset('images/cherry_icon.png'));
 });
+
+// Display the perfume mixer page
+Route::get('/perfume-mixer', [PerfumeMixerController::class, 'index']);
+
+// Handle the mixing process and recommend a perfume
+Route::post('/perfume-mixer/mix', [PerfumeMixerController::class, 'mix']);
+
+// Save blend to user profile
+Route::post('/perfume-mixer/save', [PerfumeMixerController::class, 'save'])->middleware('auth');
