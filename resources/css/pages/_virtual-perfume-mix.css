@@ -217,3 +217,24 @@
         rgba(0, 0, 0, 0.5)
     );
 }
+
+/* Custom CSS for SweetAlert2 Zoom  */
+.swal2-popup {
+    zoom: 63%; /* Add zoom to the modal */
+}
+
+@media (max-width: 640px) {
+    .notes-container {
+        flex-direction: column;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .notes-column {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100%;
+    }
+    .center-section {
+        margin: 1rem 0 !important;
+    }
+}

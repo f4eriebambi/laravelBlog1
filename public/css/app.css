@@ -899,6 +899,28 @@
     );
 }
 
+/* Custom CSS for SweetAlert2 Zoom  */
+
+.swal2-popup {
+    zoom: 63%; /* Add zoom to the modal */
+}
+
+@media (max-width: 640px) {
+    .notes-container {
+        flex-direction: column;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .notes-column {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100%;
+    }
+    .center-section {
+        margin: 1rem 0 !important;
+    }
+}
+
 /* Background Image */
 
 .form-background::before {
@@ -1826,6 +1848,16 @@ video {
     margin-right: auto;
 }
 
+.mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.my-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 .mb-2 {
     margin-bottom: 0.5rem;
 }
@@ -1986,6 +2018,10 @@ video {
     width: 100%;
 }
 
+.w-24 {
+    width: 6rem;
+}
+
 .min-w-\[300px\] {
     min-width: 300px;
 }
@@ -2004,6 +2040,10 @@ video {
 
 .max-w-\[580px\] {
     max-width: 580px;
+}
+
+.max-w-xs {
+    max-width: 20rem;
 }
 
 .-translate-y-1\/2 {
@@ -3721,6 +3761,55 @@ footer a:hover {
         --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
         box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+}
+
+@media (min-width: 768px) {
+
+    .md\:mx-8 {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .md\:my-0 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .md\:mb-0 {
+        margin-bottom: 0px;
+    }
+
+    .md\:mb-1 {
+        margin-bottom: 0.25rem;
+    }
+
+    .md\:ml-20 {
+        margin-left: 5rem;
+    }
+
+    .md\:ml-8 {
+        margin-left: 2rem;
+    }
+
+    .md\:mr-8 {
+        margin-right: 2rem;
+    }
+
+    .md\:mt-0 {
+        margin-top: 0px;
+    }
+
+    .md\:w-32 {
+        width: 8rem;
+    }
+
+    .md\:max-w-\[200px\] {
+        max-width: 200px;
+    }
+
+    .md\:flex-row {
+        flex-direction: row;
     }
 }
 

@@ -12,12 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Add DM Serif Font -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
-    <!-- Custom CSS for SweetAlert2 Zoom -->
-    <style>
-        .swal2-popup {
-            zoom: 63%; /* Add zoom to the modal */
-        }
-    </style>
 </head>
 <body class="bg-gray-100 font-sans">
     <!-- Virtual Perfume Mixer Section with Background -->
@@ -40,9 +34,9 @@
             </div>
 
             <!-- Fragrance Notes and Perfume Bottle -->
-            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; margin-left: 80px;">
+            <div class="notes-container" style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; margin-left: 80px;">
                 <!-- Left Notes -->
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-right: 60px;">
+                <div class="notes-column" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-right: 60px;">
                     @foreach($notes as $index => $note)
                         @if($index < count($notes) / 2)
                             <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors"
@@ -56,7 +50,7 @@
                 </div>
 
                 <!-- Center Section (Scent Description and Perfume Bottle) -->
-                <div style="display: flex; flex-direction: column; align-items: center; margin: 0 2rem;">
+                <div class="center-section" style="display: flex; flex-direction: column; align-items: center; margin: 0 2rem;">
                     <!-- Scent Description -->
                     <div id="scent-description" class="text-gray-700 text-center mb-4" style="max-width: 200px; font-family: 'DM Serif Display', serif;"></div>
 
@@ -74,7 +68,7 @@
                 </div>
 
                 <!-- Right Notes -->
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-left: 60px;">
+                <div class="notes-column" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-left: 60px;">
                     @foreach($notes as $index => $note)
                         @if($index >= count($notes) / 2)
                             <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors"
