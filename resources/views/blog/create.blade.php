@@ -83,7 +83,7 @@
     </form>
 
     <!-- Media Previews -->
-    <div id="media-preview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10"></div>
+    <div id="media-preview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10" style="margin-bottom: 1rem;"></div>
 
     <!-- Submit Button -->
     <div class="button-wrap" style="margin-bottom: 1.5rem;">

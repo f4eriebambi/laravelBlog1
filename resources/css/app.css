@@ -4,6 +4,7 @@
 @import "components/_contact.css";
 @import "pages/_virtual-perfume-mix.css";
 @import "pages/_blog.css";
+@import "pages/_home.css";
 
 @tailwind base;
 @tailwind components;
@@ -145,20 +146,7 @@
     display: block; /* Remove extra space below the video */
 }
 
-.gray-background {
-    background-color: #ececec;
-    border-bottom: 1px solid #ececec;
-    padding-top: 3.75rem; /* py-15 equivalent */
-    padding-bottom: 3.75rem;
-    margin-top: 5rem; /* Adds space above */
-    width: 90%; /* Crops the background width */
-    margin-left: auto;
-    margin-right: auto;
-}
 
-.gray-background div.text-left {
-    margin-top: 2rem;
-}
 
 /* Explore Section with Background */
 .explore-section {
