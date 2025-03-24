@@ -44,9 +44,9 @@
     <!-- Title and Description Section -->
     <div class="w-full lg:w-1/2 space-y-6" style="padding-left: 12rem;"> <!-- Added pl-8 to push content to the right -->
         <span class="text-gray-500">
-            A tale by <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Published on
+            {{-- A tale by <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Published on
             {{ date('jS M Y', strtotime($post->updated_at)) }}
-        </span>
+        </span> --}}
 
         <p class="text-xl text-gray-700 leading-8 font-light">
             {{ $post->description }}

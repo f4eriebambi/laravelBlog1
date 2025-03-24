@@ -58,9 +58,9 @@
                 <div class="card__content">
                     <p class="card__title">{{ $post->title }}</p>
                     <p class="card__description">{{ $post->description }}</p>
-                    <div class="text-sm text-gray-500 mt-2"> <!-- Added "Created On" -->
+                    {{-- <div class="text-sm text-gray-500 mt-2">
                         Published on {{ date('jS M Y', strtotime($post->updated_at)) }}
-                    </div>
+                    </div> --}}
                     <a href="/blog/{{ $post->slug }}" class="mt-4 inline-block border 1px text-center bg-gray-50 text-gray-700 py-2 px-4 font-bold text-xl uppercase hover:bg-gray-700 hover:text-gray-50 transition-colors duration-300">
                         Unveil More
                     </a>

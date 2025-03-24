@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PerfumeMixerController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,10 @@ use App\Http\Controllers\PerfumeMixerController;
 |
 */
 
-Route::get('/', [PagesController::class, 'index']);
+// Route::get('/', [PagesController::class, 'pages.index']);
+Route::get('/', function () {
+    return view('pages.index'); // Points to resources/views/pages/index.blade.php
+});
 
 Route::resource('/blog', PostsController::class);
 
@@ -25,7 +29,7 @@ Auth::routes();
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
-    return view('about');
+    return view('pages.about');
 });
 
 // Apply the middleware to the routes
@@ -51,3 +55,5 @@ Route::post('/perfume-mixer/mix', [PerfumeMixerController::class, 'mix']);
 
 // Save blend to user profile
 Route::post('/perfume-mixer/save', [PerfumeMixerController::class, 'save'])->middleware('auth');
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');

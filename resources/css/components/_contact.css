@@ -1,0 +1,102 @@
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.contact-card {
+    border: 1px solid #000;
+    max-width: 600px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: -0.6rem 0.6rem 0 rgba(29, 30, 28, 0.26);
+}
+
+.contact-header {
+    text-align: center;
+    padding: 16px;
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 1px solid #000;
+    background-color: #f8f8f8;
+}
+
+.contact-intro {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #000;
+}
+
+.contact-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-body__field {
+    margin-bottom: 20px;
+}
+
+.contact-body__field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.contact-body__field input,
+.contact-body__field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    background-color: #f8f8f8;
+    font-size: 14px;
+    color: #333;
+    resize: vertical;
+}
+
+.contact-body__field input:focus,
+.contact-body__field textarea:focus {
+    outline: none;
+    border-color: #000;
+}
+
+.contact-body__submit {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-body__submit:hover {
+    background-color: #333;
+}
+
+/* Contact Image Styles */
+.contact-image {
+    width: 100%; /* Ensure the container spans the full width */
+    height: 300px; /* Set a fixed height for cropping */
+    overflow: hidden; /* Crop the image */
+    border-bottom: 1px solid #000; /* Matches the card border */
+    position: relative; /* For positioning adjustments */
+}
+
+.contact-image__img {
+    width: 100%; /* Ensure the image spans the full width */
+    height: 100%; /* Ensure the image spans the full height */
+    object-fit: cover; /* Crop and cover the container */
+    object-position: center; /* Center the image within the container */
+    filter: grayscale(20%) contrast(90%); /* Softens the image to match the vibe */
+}
