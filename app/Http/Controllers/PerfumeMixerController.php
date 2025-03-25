@@ -150,7 +150,7 @@ public function mix(Request $request)
         ->orderBy('created_at', 'desc')
         ->get();
 
-    return view('fragrance-wardrobe', compact('blends'));
+    return view('special-feature.fragrance-wardrobe', compact('blends'));
 }
 
     /**

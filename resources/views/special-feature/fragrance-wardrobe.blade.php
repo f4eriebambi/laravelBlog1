@@ -110,7 +110,7 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/fragrance-wardrobe/${blendId}`, {
+                        fetch(`/special-feature/fragrance-wardrobe/${blendId}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
