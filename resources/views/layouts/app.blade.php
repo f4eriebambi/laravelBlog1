@@ -83,13 +83,14 @@
                             @endif
                         @else
                             <div class="adminDropdown">
-                                <span class="cursor-pointer">{{ Auth::user()->name }}</span>
-                                @if (Auth::id() === 1)
-                                    <div class="adminDropdown-content">
-                                        <a href="/blog/create">Create Post</a>
-                                    </div>
-                                @endif
-                            </div>
+    <span class="cursor-pointer">{{ Auth::user()->name }}</span>
+    <div class="adminDropdown-content">
+        @if (Auth::id() === 1)
+            <a href="/blog/create">Create Post</a>
+        @endif
+        <a href="/fragrance-wardrobe">My Fragrance Wardrobe</a>
+    </div>
+</div>
 
                             <a href="{{ route('logout') }}" class="no-underline hover:underline"
                                 onclick="event.preventDefault();

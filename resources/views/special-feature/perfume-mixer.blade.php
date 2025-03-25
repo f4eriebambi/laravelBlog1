@@ -88,30 +88,38 @@
         const notes = [];
         const maxNotes = 3;
 
-        document.querySelectorAll('.note').forEach(note => {
-            note.addEventListener('click', () => {
-                if (notes.length < maxNotes) {
-                    const noteId = note.dataset.noteId;
-                    const noteName = note.querySelector('p').textContent;
-                    const noteColor = note.dataset.color;
-                    const noteDescription = note.dataset.description;
+document.querySelectorAll('.note').forEach(note => {
+    note.addEventListener('click', () => {
+        if (notes.length < maxNotes) {
+            const noteId = note.dataset.noteId;
+            const noteName = note.querySelector('p').textContent;
+            const noteColor = note.dataset.color;
+            const noteDescription = note.dataset.description;
 
-                    notes.push({ id: noteId, name: noteName, color: noteColor, description: noteDescription });
+            notes.push({ id: noteId, name: noteName, color: noteColor, description: noteDescription });
 
-                    // Update bottle fill
-                    updateBottleFill(notes);
+            // Update bottle fill
+            updateBottleFill(notes);
 
-                    // Update category description
-                    const categoryDescription = document.getElementById('category-description');
-                    categoryDescription.textContent = noteDescription;
-                    categoryDescription.classList.add('show');
+            // Update category description
+            const categoryDescription = document.getElementById('category-description');
+            categoryDescription.textContent = noteDescription;
+            categoryDescription.classList.add('show');
 
-                    // Update scent description
-                    const scentDescription = document.getElementById('scent-description');
-                    scentDescription.textContent = `Your fragrance unfolds with whispers of ${notes.map(n => n.name).join(', ')}—a symphony of scent crafted just for you.`;
-                }
+            // Update scent description
+            const scentDescription = document.getElementById('scent-description');
+            scentDescription.textContent = `Your fragrance unfolds with whispers of ${notes.map(n => n.name).join(', ')}—a symphony of scent crafted just for you.`;
+        } else {
+            // Show SweetAlert when trying to add more than 3 notes
+            Swal.fire({
+                icon: 'info',
+                title: 'Elegance in Simplicity',
+                text: 'Your blend is limited to three notes—choose wisely.',
+                confirmButtonText: 'Got it!'
             });
-        });
+        }
+    });
+});
 
         function updateBottleFill(selectedNotes) {
             const bottleFill = document.querySelector('.perfume-bottle .fill');
@@ -160,9 +168,11 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀</p>
                                 <p class="text-sm text-gray-500">Notes: <span class="font-semibold">${data.notes}</span></p>
-                                <button id="tuck-away" class="perfumeRec-modal-button">
-                                    Tuck this treasure away in your Fragrance Wardrobe
-                                </button>
+                                <input type="hidden" id="blend-name" value="${data.name}">
+        <input type="hidden" id="blend-notes" value="${data.notes}">
+        <button id="tuck-away" class="perfumeRec-modal-button">
+            Tuck this treasure away in your Fragrance Wardrobe
+        </button>
                             `,
                             confirmButtonText: 'Try Again !',
                             didClose: () => {
@@ -175,10 +185,14 @@
     title: 'A Whisper Away from Perfection ✦!',
     imageUrl: data.image, // Use the image URL from the response
     imageAlt: 'Recommended Perfume',
+                                imageHeight: '350px',
     html: `
         <p class="text-sm text-gray-500" style="margin-bottom: 1rem; font-size: 20px;">While this isn't an exact match, we think you'll adore this fragrance—it carries the essence of your creation.</p>
         <p class="text-lg font-semibold mt-4" style="margin-bottom: 1rem; font-size: 25px;">${data.name}</p>
         <p class="text-sm text-gray-500 mt-2" style="margin-bottom: 1.5rem; font-size: 20px;">${data.description}</p>
+        <input type="hidden" id="blend-name" value="${data.name}">
+        <input type="hidden" id="blend-notes" value="${data.notes}">
+        <input type="hidden" id="perfume-id" value="${data.perfume_id}">
         <a href="${data.buy_link}" target="_blank" class="perfumeRec-modal-button" style="margin-bottom: 1rem;">
             Bring this scent to life—shop now
         </a>
@@ -194,19 +208,23 @@
                     } else {
                         // Use SweetAlert2 for recommended perfumes
                         Swal.fire({
-                            title: 'Perfection Captured in a Bottle', // Perfume name
+                            title: 'Perfection Captured in a Bottle', 
                             text: data.description, // Perfume description 
                             imageUrl: data.image, // Use the image URL from the response
                             imageAlt: 'Recommended Perfume',
+                            imageHeight: '350px',
                             html: `
                                 <p class="text-lg font-semibold mt-4" style="margin-bottom: 1rem; font-size: 25px;">${data.name}</p>
-                                <p class="text-sm text-gray-500 mt-2" style="margin-bottom: 1rem; font-size: 20px;>${data.description}</p>
-                                <a href="${data.buy_link}" target="_blank" class="perfumeRec-modal-button">
-                                    Bring this scent to life—shop now
-                                </a>
-                                <button id="tuck-away" class="perfumeRec-modal-button mt-4">
-                                    Tuck this treasure away in your Fragrance Wardrobe
-                                </button>
+        <p class="text-sm text-gray-500 mt-2" style="margin-bottom: 1rem; font-size: 20px;">${data.description}</p>
+        <input type="hidden" id="blend-name" value="${data.name}">
+        <input type="hidden" id="blend-notes" value="${data.notes}">
+        <input type="hidden" id="perfume-id" value="${data.perfume_id}">
+        <a href="${data.buy_link}" target="_blank" class="perfumeRec-modal-button">
+            Bring this scent to life—shop now
+        </a>
+        <button id="tuck-away" class="perfumeRec-modal-button mt-4">
+            Tuck this treasure away in your Fragrance Wardrobe
+        </button>
                             `,
                             confirmButtonText: 'Try Again !',
                             didClose: () => {
@@ -246,6 +264,106 @@
             document.getElementById('scent-description').textContent = '';
             document.getElementById('category-description').textContent = '';
         }
+
+        // Handle click events on the "Tuck away" button in SweetAlert modals
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'tuck-away') {
+        @auth
+            // Get values from hidden inputs
+            const blendName = document.getElementById('blend-name')?.value;
+            const blendNotes = document.getElementById('blend-notes')?.value;
+            const perfumeId = document.getElementById('perfume-id')?.value;
+
+            // Prepare blend data
+            const blendData = {
+                blend_name: blendName,
+                blend_notes: blendNotes || notes.map(n => n.name).join(', '),
+                perfume_id: perfumeId || null,
+                colors: notes.map(note => note.color).join(',') // Store colors as "color1,color2,color3"
+            };
+
+            console.log('Saving blend with colors:', blendData); // Debugging
+
+            // Save the blend
+            fetch('/save-blend', {
+                method: 'POST',
+                headers: { 
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(blendData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+    if (data.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Cherished & Collected!',
+            html: `
+                <p>Your custom fragrance now lives in your Fragrance Wardrobe.</p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <button onclick="window.location.href='/fragrance-wardrobe'" 
+                            class="perfumeRec-modal-button">
+                        Go to Wardrobe
+                    </button>
+                    <button onclick="resetPerfume(); Swal.close();" 
+                            class="perfumeRec-modal-button">
+                        Perfect!
+                    </button>
+                </div>
+            `,
+            showConfirmButton: false
+        });
+    } else if (data.message === 'limit_reached') {
+        Swal.fire({
+            title: 'Wardrobe Overflow!',
+            text: 'Your fragrance wardrobe is brimming with beauty! You can only keep up to 6 scents at a time. To add a new one, you\'ll need to part with one (or more) first.',
+            icon: 'info',
+            confirmButtonText: 'Manage Wardrobe',
+            cancelButtonText: 'Keep Everything',
+            showCancelButton: true,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/fragrance-wardrobe';
+            }
+        });
+    } else {
+        throw new Error('Save failed');
+    }
+})
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Failed to save your blend. Please try again.'
+                });
+            });
+        @else
+            // Unauthenticated user logic
+            Swal.fire({
+                icon: 'info',
+                title: 'Secure Your Signature Scents.',
+                html: 'Don\'t lose your masterpiece—Secure it now or choose later.',
+                showDenyButton: true,
+                confirmButtonText: 'Register',
+                denyButtonText: 'Perhaps Later',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/register';
+                } else if (result.isDenied) {
+                    // Do nothing, just close the alert
+                }
+            });
+        @endauth
+    }
+});
     </script>
 </body>
 </html>

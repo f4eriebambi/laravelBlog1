@@ -220,7 +220,7 @@
 
 /* Custom CSS for SweetAlert2 Zoom  */
 .swal2-popup {
-    zoom: 63%; /* Add zoom to the modal */
+    zoom: 75%; /* Add zoom to the modal */
 }
 
 @media (max-width: 640px) {
@@ -238,3 +238,21 @@
         margin: 1rem 0 !important;
     }
 }
+
+/* Wardrobe Specific Styles */
+.blend-card {
+    transition: all 0.3s ease;
+    min-height: 380px;
+}
+
+.blend-card:hover {
+    transform: translateY(-5px);
+}
+
+/* .delete-blend {
+    background: linear-gradient(-75deg, rgba(255, 154, 162, 0.2), rgba(255, 183, 178, 0.3));
+}
+
+.delete-blend:hover {
+    background: linear-gradient(-75deg, rgba(255, 154, 162, 0.3), rgba(255, 183, 178, 0.4));
+} */
