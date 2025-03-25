@@ -19,10 +19,10 @@ class Post extends Model
     }
 
     // Add relationship to PostMedia
-    public function media()
-    {
-        return $this->hasMany(PostMedia::class);
-    }
+public function media()
+{
+    return $this->hasMany(PostMedia::class)->orderBy('position');
+}
 
     public function sluggable(): array
     {

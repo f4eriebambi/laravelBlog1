@@ -43,39 +43,37 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240', // Allow multiple files (10MB max each)
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'media' => 'max:10',
+        'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
+    ]);
 
-        // Create the post
-        $post = Post::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-            'image_path' => null, // Remove single image upload logic
-            'user_id' => auth()->user()->id,
-        ]);
+    $post = Post::create([
+        'title' => $request->input('title'),
+        'description' => $request->input('description'),
+        'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+        'user_id' => auth()->user()->id,
+    ]);
 
-        // Handle multiple media uploads
-        if ($request->hasFile('media')) {
-            foreach ($request->file('media') as $file) {
-                $path = $file->store('post_media', 'public'); // Store in 'storage/app/public/post_media'
-                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+    if ($request->hasFile('media')) {
+        foreach ($request->file('media') as $index => $file) {
+            $path = $file->store('post_media', 'public');
+            $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
 
-                PostMedia::create([
-                    'post_id' => $post->id,
-                    'file_path' => $path,
-                    'file_type' => $fileType,
-                ]);
-            }
+            PostMedia::create([
+                'post_id' => $post->id,
+                'file_path' => $path,
+                'file_type' => $fileType,
+                'position' => $index
+            ]);
         }
-
-        return redirect('/blog')
-            ->with('message', 'Your post has been added!');
     }
+
+    return redirect('/blog')->with('message', 'Your post has been added!');
+}
 
     /**
      * Display the specified resource.
@@ -109,54 +107,62 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
-    {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'media' => 'max:10',
+        'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
+    ]);
 
-        // Find the post
-        $post = Post::where('slug', $slug)->firstOrFail();
+    $post = Post::where('slug', $slug)->firstOrFail();
+    $post->update([
+        'title' => $request->input('title'),
+        'description' => $request->input('description'),
+        'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+        'user_id' => auth()->user()->id,
+    ]);
 
-        // Update the post (FIXED: Replace [...] with your original code)
-        $post->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-            'user_id' => auth()->user()->id,
-        ]);
-
-        // Delete marked media
-        if ($request->filled('deleted_media')) {
-            $deletedIds = explode(',', $request->input('deleted_media'));
-            
-            foreach ($deletedIds as $id) {
-                $media = PostMedia::find($id);
-                if ($media) {
-                    // Delete the file from storage
-                    Storage::disk('public')->delete($media->file_path);
-                    $media->delete();
-                }
-            }
+    // Update positions of existing media
+    if ($request->has('media_positions')) {
+        foreach ($request->input('media_positions') as $mediaId => $position) {
+            PostMedia::where('id', $mediaId)
+                ->where('post_id', $post->id)
+                ->update(['position' => $position]);
         }
-
-        // Handle new uploads (keep your existing code)
-        if ($request->hasFile('media')) {
-            foreach ($request->file('media') as $file) {
-                $path = $file->store('post_media', 'public');
-                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
-
-                PostMedia::create([
-                    'post_id' => $post->id,
-                    'file_path' => $path,
-                    'file_type' => $fileType,
-                ]);
-            }
-        }
-
-        return redirect('/blog')->with('message', 'Your post has been updated!');
     }
+
+    // Delete marked media
+    if ($request->filled('deleted_media')) {
+        $deletedIds = explode(',', $request->input('deleted_media'));
+        foreach ($deletedIds as $id) {
+            $media = PostMedia::find($id);
+            if ($media) {
+                Storage::disk('public')->delete($media->file_path);
+                $media->delete();
+            }
+        }
+    }
+
+    // Add new media
+    if ($request->hasFile('media')) {
+        $currentMaxPosition = PostMedia::where('post_id', $post->id)->max('position') ?? -1;
+        
+        foreach ($request->file('media') as $index => $file) {
+            $path = $file->store('post_media', 'public');
+            $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+
+            PostMedia::create([
+                'post_id' => $post->id,
+                'file_path' => $path,
+                'file_type' => $fileType,
+                'position' => $currentMaxPosition + $index + 1
+            ]);
+        }
+    }
+
+    return redirect('/blog')->with('message', 'Your post has been updated!');
+}
 
     /**
      * Remove the specified resource from storage.

@@ -87,27 +87,31 @@
     </form>
 
     <!-- Existing Media with Remove Buttons -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10" id="existing-media">
-        @foreach ($post->media as $media)
-            <div class="relative group" data-media-id="{{ $media->id }}">
-                @if ($media->file_type === 'image')
-                    <img src="{{ asset('storage/' . $media->file_path) }}" alt="Post Image" 
-                        class="w-full h-72 object-cover rounded-lg shadow-lg">
-                @elseif ($media->file_type === 'video')
-                    <video controls class="w-full h-72 object-cover rounded-lg shadow-lg">
-                        <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                @endif
-                <button 
-                    type="button" 
-                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity delete-existing-media"
-                >
-                    ✕
-                </button>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10" id="existing-media">
+    @foreach ($post->media as $media)
+        <div class="relative group border-2 border-gray-200 p-1 rounded-lg" data-media-id="{{ $media->id }}">
+            @if ($media->file_type === 'image')
+                <img src="{{ asset('storage/' . $media->file_path) }}" alt="Post Image" 
+                    class="w-full h-64 object-cover rounded-lg">
+            @elseif ($media->file_type === 'video')
+                <video controls class="w-full h-64 object-cover rounded-lg">
+                    <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            @endif
+            <div class="absolute top-2 left-2 bg-black bg-opacity-50 text-white rounded-full px-2 py-1 text-xs">
+                {{ $loop->iteration }}
             </div>
-        @endforeach
-    </div>
+            <input type="hidden" name="media_positions[{{ $media->id }}]" value="{{ $loop->index }}">
+            <button 
+                type="button" 
+                class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity delete-existing-media"
+            >
+                ✕
+            </button>
+        </div>
+    @endforeach
+</div>
 
     <!-- Preview new media -->
     <div id="media-preview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10" style="margin-bottom: 1rem;"></div>
@@ -123,12 +127,95 @@
 
 <!-- Add SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Add this script at the bottom of the file -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 <script>
-    // Track deleted media IDs
+    let uploadedFiles = []; // Array to track new files
     let deletedMediaIds = [];
+    const MAX_FILES = 10;
 
-    // Delete Media Handling
-    document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('media-input').addEventListener('change', function(event) {
+        const files = Array.from(event.target.files);
+        const existingCount = document.querySelectorAll('#existing-media .group').length - deletedMediaIds.length;
+        
+        if (existingCount + uploadedFiles.length + files.length > MAX_FILES) {
+            Swal.fire({
+                title: 'Too Many Files, Darling',
+                text: `Keep it curated—only ${MAX_FILES} files can be uploaded.`,
+                icon: 'error'
+            });
+            return;
+        }
+
+        uploadedFiles = [...uploadedFiles, ...files];
+        updatePreview();
+        updateFileInput();
+    });
+
+    function updatePreview() {
+        const previewContainer = document.getElementById('media-preview');
+        previewContainer.innerHTML = '';
+
+        uploadedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const mediaContainer = document.createElement('div');
+                mediaContainer.className = 'relative group border-2 border-dashed border-gray-300 p-1 rounded-lg';
+                mediaContainer.setAttribute('data-index', index);
+                mediaContainer.innerHTML = `
+                    ${file.type.startsWith('image') 
+                        ? `<img src="${e.target.result}" alt="Preview" class="w-full h-64 object-cover rounded-lg">`
+                        : `<video controls class="w-full h-64 object-cover rounded-lg">
+                              <source src="${e.target.result}" type="${file.type}">
+                              Your browser does not support the video tag.
+                           </video>`}
+                    <div class="absolute top-2 left-2 bg-black bg-opacity-50 text-white rounded-full px-2 py-1 text-xs">
+                        New ${index + 1}
+                    </div>
+                    <button 
+                        type="button" 
+                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onclick="removeFile(${index})"
+                    >
+                        ✕
+                    </button>
+                `;
+
+                previewContainer.appendChild(mediaContainer);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // Initialize SortableJS for new files
+        new Sortable(previewContainer, {
+            animation: 150,
+            ghostClass: 'bg-blue-50',
+            onEnd: function() {
+                const newOrder = Array.from(previewContainer.children).map(el => parseInt(el.getAttribute('data-index')));
+                const reorderedFiles = newOrder.map(i => uploadedFiles[i]);
+                uploadedFiles = reorderedFiles;
+                updatePreviewNumbers();
+                updateFileInput();
+            }
+        });
+    }
+
+    // Initialize SortableJS for existing media
+    document.addEventListener('DOMContentLoaded', function() {
+        const existingMediaContainer = document.getElementById('existing-media');
+        
+        new Sortable(existingMediaContainer, {
+            animation: 150,
+            ghostClass: 'bg-blue-50',
+            onEnd: function() {
+                // Update position numbers for existing media
+                updateExistingMediaNumbers();
+            }
+        });
+
+        // Existing media deletion handling
         document.querySelectorAll('.delete-existing-media').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -145,17 +232,15 @@
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Add to deletion list
                         deletedMediaIds.push(mediaId);
                         document.getElementById('deleted-media-ids').value = deletedMediaIds.join(',');
 
-                        // Visual feedback: Grey out the media element
                         mediaElement.style.opacity = '0.3';
                         mediaElement.querySelector('button').disabled = true;
 
                         Swal.fire({
-                            title: "Deleted!",
-                            text: "Your media has been deleted.",
+                            title: "Poof! Deleted!",
+                            text: "Your media has vanished like a fleeting moment of glamour.",
                             icon: "success"
                         });
                     }
@@ -164,94 +249,40 @@
         });
     });
 
-    // Image Preview Handling
-    document.getElementById('media-input').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('media-preview');
-        previewContainer.innerHTML = '';
-
-        const files = event.target.files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const mediaElement = file.type.startsWith('image') 
-                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
-                    : `<video controls class="w-full h-72 object-cover rounded-lg">
-                          <source src="${e.target.result}" type="${file.type}">
-                          Your browser does not support the video tag.
-                       </video>`;
-
-                const mediaContainer = document.createElement('div');
-                mediaContainer.className = 'relative group';
-                mediaContainer.innerHTML = `
-                    ${mediaElement}
-                    <button 
-                        type="button" 
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onclick="removeFile(${i})"
-                    >
-                        ✕
-                    </button>
-                `;
-
-                previewContainer.appendChild(mediaContainer);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Remove new media file from preview
-    function removeFile(index) {
-        const previewContainer = document.getElementById('media-preview');
-        const fileInput = document.getElementById('media-input');
-        const files = Array.from(fileInput.files);
-        files.splice(index, 1);
-
-        // Update the file input
-        const dataTransfer = new DataTransfer();
-        files.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-
-        // Update the preview
-        updatePreview();
+    function updateExistingMediaNumbers() {
+        const existingMediaContainer = document.getElementById('existing-media');
+        Array.from(existingMediaContainer.children).forEach((child, index) => {
+            const positionInput = child.querySelector('input[name="media_positions[]"]');
+            if (positionInput) {
+                positionInput.value = index;
+            }
+            const numberBadge = child.querySelector('.absolute.top-2.left-2');
+            if (numberBadge) {
+                numberBadge.textContent = index + 1;
+            }
+        });
     }
 
-    // Update media preview
-    function updatePreview() {
+    function updatePreviewNumbers() {
         const previewContainer = document.getElementById('media-preview');
-        previewContainer.innerHTML = '';
+        Array.from(previewContainer.children).forEach((child, index) => {
+            const numberBadge = child.querySelector('.absolute.top-2.left-2');
+            if (numberBadge) {
+                numberBadge.textContent = `New ${index + 1}`;
+            }
+        });
+    }
 
-        const files = document.getElementById('media-input').files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
+    function removeFile(index) {
+        uploadedFiles.splice(index, 1);
+        updatePreview();
+        updateFileInput();
+    }
 
-            reader.onload = function(e) {
-                const mediaElement = file.type.startsWith('image') 
-                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
-                    : `<video controls class="w-full h-72 object-cover rounded-lg">
-                          <source src="${e.target.result}" type="${file.type}">
-                          Your browser does not support the video tag.
-                       </video>`;
-
-                const mediaContainer = document.createElement('div');
-                mediaContainer.className = 'relative group';
-                mediaContainer.innerHTML = `
-                    ${mediaElement}
-                    <button 
-                        type="button" 
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onclick="removeFile(${i})"
-                    >
-                        ✕
-                    </button>
-                `;
-
-                previewContainer.appendChild(mediaContainer);
-            };
-            reader.readAsDataURL(file);
-        }
+    function updateFileInput() {
+        const dataTransfer = new DataTransfer();
+        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+        document.getElementById('media-input').files = dataTransfer.files;
     }
 </script>
 

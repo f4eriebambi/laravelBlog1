@@ -94,16 +94,27 @@
     </div>
 </div>
 
+<!-- Add this script at the bottom of the file -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 <script>
     let uploadedFiles = []; // Array to track selected files
+    const MAX_FILES = 10; // Maximum allowed files
 
     document.getElementById('media-input').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('media-preview');
-        previewContainer.innerHTML = '';
+        const files = Array.from(event.target.files);
+        
+        // Check if adding these files would exceed the limit
+        if (uploadedFiles.length + files.length > MAX_FILES) {
+            Swal.fire({
+                title: 'Too Many Files, Darling',
+                text: `Keep it curated—only ${MAX_FILES} files can be uploaded.`,
+                icon: 'error'
+            });
+            return;
+        }
 
         // Add new files to the array
-        uploadedFiles = [...uploadedFiles, ...Array.from(event.target.files)];
-
+        uploadedFiles = [...uploadedFiles, ...files];
         updatePreview();
         updateFileInput();
     });
@@ -116,17 +127,19 @@
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                const mediaElement = file.type.startsWith('image') 
-                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
-                    : `<video controls class="w-full h-72 object-cover rounded-lg">
-                          <source src="${e.target.result}" type="${file.type}">
-                          Your browser does not support the video tag.
-                       </video>`;
-
                 const mediaContainer = document.createElement('div');
-                mediaContainer.className = 'relative group';
+                mediaContainer.className = 'relative group border-2 border-dashed border-gray-300 p-1 rounded-lg';
+                mediaContainer.setAttribute('data-index', index);
                 mediaContainer.innerHTML = `
-                    ${mediaElement}
+                    ${file.type.startsWith('image') 
+                        ? `<img src="${e.target.result}" alt="Preview" class="w-full h-64 object-cover rounded-lg">`
+                        : `<video controls class="w-full h-64 object-cover rounded-lg">
+                              <source src="${e.target.result}" type="${file.type}">
+                              Your browser does not support the video tag.
+                           </video>`}
+                    <div class="absolute top-2 left-2 bg-black bg-opacity-50 text-white rounded-full px-2 py-1 text-xs">
+                        ${index + 1}
+                    </div>
                     <button 
                         type="button" 
                         class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -141,20 +154,45 @@
 
             reader.readAsDataURL(file);
         });
+
+        // Initialize SortableJS for drag-and-drop reordering
+        new Sortable(previewContainer, {
+            animation: 150,
+            ghostClass: 'bg-blue-50',
+            onEnd: function() {
+                // Get new order from DOM
+                const newOrder = Array.from(previewContainer.children).map(el => parseInt(el.getAttribute('data-index')));
+                
+                // Reorder uploadedFiles array
+                const reorderedFiles = newOrder.map(i => uploadedFiles[i]);
+                uploadedFiles = reorderedFiles;
+                
+                // Update the numbers
+                updatePreviewNumbers();
+                updateFileInput();
+            }
+        });
+    }
+
+    function updatePreviewNumbers() {
+        const previewContainer = document.getElementById('media-preview');
+        Array.from(previewContainer.children).forEach((child, index) => {
+            const numberBadge = child.querySelector('.absolute.top-2.left-2');
+            if (numberBadge) {
+                numberBadge.textContent = index + 1;
+            }
+        });
     }
 
     function removeFile(index) {
-        uploadedFiles.splice(index, 1); // Remove the file from the array
+        uploadedFiles.splice(index, 1);
         updatePreview();
         updateFileInput();
     }
 
     function updateFileInput() {
-        // Convert array back to FileList
         const dataTransfer = new DataTransfer();
         uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        
-        // Update the file input
         document.getElementById('media-input').files = dataTransfer.files;
     }
 </script>
