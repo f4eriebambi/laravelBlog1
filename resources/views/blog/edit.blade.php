@@ -126,11 +126,12 @@
 <script>
     // Track deleted media IDs
     let deletedMediaIds = [];
-    const MAX_FILES = 10; // Define the maximum number of files
-    let newFiles = []; // Track new files being uploaded
+    const MAX_FILES = 10;
+    let newFiles = [];
 
-    // Delete Media Handling (keep existing code)
-    document.addEventListener('DOMContentLoaded', function () {
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Delete Media Handling
         document.querySelectorAll('.delete-existing-media').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -147,47 +148,70 @@
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Add to deletion list
                         deletedMediaIds.push(mediaId);
                         document.getElementById('deleted-media-ids').value = deletedMediaIds.join(',');
-
-                        // Visual feedback: Grey out the media element
                         mediaElement.style.opacity = '0.3';
                         mediaElement.querySelector('button').disabled = true;
-
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your media has been deleted.",
-                            icon: "success"
-                        });
+                        Swal.fire("All Gone!", "Your media has been deleted—time to make space for new treasures", "success");
                     }
                 });
             });
         });
-    });
 
-    // Image Preview Handling
-    document.getElementById('media-input').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('media-preview');
-        const existingMediaCount = document.querySelectorAll('#existing-media > div:not([style*="opacity: 0.3"])').length;
-        
-        // Check if adding these files would exceed the limit
-        if (existingMediaCount - deletedMediaIds.length + newFiles.length + event.target.files.length > MAX_FILES) {
-            const remaining = MAX_FILES - (existingMediaCount - deletedMediaIds.length + newFiles.length);
-            Swal.fire({
-                title: 'Too Many Files, Darling',
-                text: `Keep it curated—only ${MAX_FILES} files can be uploaded. You already have ${uploadedFiles.length} files selected.`,
-                icon: 'warning',
-                confirmButtonText: 'Understood!',
-                confirmButtonColor: '#3085d6',
-            });
-            this.value = ''; // Clear the input
-            return;
-        }
+        // Initialize Sortable for EXISTING media
+        new Sortable(document.getElementById('existing-media'), {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function() {
+                const order = Array.from(document.querySelectorAll('#existing-media .relative'))
+                    .map(el => el.dataset.mediaId);
 
-        // Add new files to the array
-        newFiles = [...newFiles, ...Array.from(event.target.files)];
-        updatePreview();
+                    // Debug: Log what we're sending
+        console.log('Sending order:', order);
+                
+                fetch(`/blog/{{ $post->id }}/reorder-media`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ order: order })
+                })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Reorder success:', data);
+        })
+        .catch(error => {
+            console.error('Reorder error:', error);
+            Swal.fire('Error', 'Failed to save new order', 'error');
+        });
+            }
+        });
+
+        // Image Preview Handling
+        document.getElementById('media-input').addEventListener('change', function(event) {
+            const existingMediaCount = document.querySelectorAll('#existing-media > div:not([style*="opacity: 0.3"])').length;
+            
+            if (existingMediaCount - deletedMediaIds.length + newFiles.length + event.target.files.length > MAX_FILES) {
+                Swal.fire({
+                    title: 'Too Many Files',
+                    text: `Maximum ${MAX_FILES} files allowed. You have ${existingMediaCount - deletedMediaIds.length + newFiles.length} files.`,
+                    icon: 'warning'
+                });
+                this.value = '';
+                return;
+            }
+
+            newFiles = [...newFiles, ...Array.from(event.target.files)];
+            updatePreview();
+        });
     });
 
     // Update media preview
@@ -195,7 +219,6 @@
         const previewContainer = document.getElementById('media-preview');
         previewContainer.innerHTML = '';
 
-        // Calculate counts
         const existingMediaCount = document.querySelectorAll('#existing-media > div:not([style*="opacity: 0.3"])').length;
         const totalFiles = existingMediaCount - deletedMediaIds.length + newFiles.length;
 
@@ -205,10 +228,8 @@
         countElement.textContent = `Files selected: ${totalFiles}/${MAX_FILES}`;
         previewContainer.appendChild(countElement);
 
-        for (let i = 0; i < newFiles.length; i++) {
-            const file = newFiles[i];
+        newFiles.forEach((file, index) => {
             const reader = new FileReader();
-
             reader.onload = function(e) {
                 const mediaElement = file.type.startsWith('image') 
                     ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
@@ -219,35 +240,43 @@
 
                 const mediaContainer = document.createElement('div');
                 mediaContainer.className = 'relative group';
+                mediaContainer.setAttribute('data-file-index', index);
                 mediaContainer.innerHTML = `
                     ${mediaElement}
-                    <button 
-                        type="button" 
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onclick="removeFile(${i})"
-                    >
+                    <button type="button" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeFile(${index})">
                         ✕
                     </button>
                 `;
-
                 previewContainer.appendChild(mediaContainer);
             };
             reader.readAsDataURL(file);
-        }
+        });
+
+        // Initialize Sortable for NEW media preview
+        new Sortable(previewContainer, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function() {
+                const newOrder = Array.from(document.querySelectorAll('#media-preview .relative'))
+                    .map(el => parseInt(el.dataset.fileIndex));
+                
+                newFiles = newOrder.map(index => newFiles[index]);
+                
+                const dataTransfer = new DataTransfer();
+                newFiles.forEach(file => dataTransfer.items.add(file));
+                document.getElementById('media-input').files = dataTransfer.files;
+            }
+        });
     }
 
-    // Remove new media file from preview
     function removeFile(index) {
         newFiles.splice(index, 1);
-        
-        // Update the file input
         const dataTransfer = new DataTransfer();
         newFiles.forEach(file => dataTransfer.items.add(file));
         document.getElementById('media-input').files = dataTransfer.files;
-
-        // Update the preview
         updatePreview();
     }
 </script>
+
 
 @endsection

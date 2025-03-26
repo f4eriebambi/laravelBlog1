@@ -16,6 +16,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -52,8 +53,8 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="#">Page 1 (WIP)</a>
             <a href="#">Page 2 (WIP)</a>
-            <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
             <a href="/contact">A Message for Me?</a>
+            <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
         </div>
 
         <!-- Sidenav Toggle Button -->

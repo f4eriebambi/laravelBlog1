@@ -43,7 +43,10 @@ Route::middleware('admin.user')->group(function () {
     Route::put('/posts/{post}', [PostsController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
     Route::delete('/blog/media/{media}', [PostsController::class, 'deleteMedia'])->name('media.delete');
+    Route::post('/blog/{post}/reorder-media', [PostsController::class, 'reorderMedia'])
+->name('posts.reorder-media');
 });
+
 
 // Redirect legacy favicon.ico requests to new PNG
 Route::get('/favicon.ico', function () {

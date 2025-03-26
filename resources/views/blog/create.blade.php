@@ -49,6 +49,7 @@
     placeholder="Set the Scene..."
     class="py-10 bg-transparent block border-b-2 w-full h-60 text-xl outline-none focus:border-blue-500 transition-colors duration-300 whitespace-pre-wrap"
 ></textarea>
+        </div>
 
         <!-- Right Column: Media Uploader -->
         <div class="w-full lg:w-1/2">
@@ -144,6 +145,8 @@
 
                 const mediaContainer = document.createElement('div');
                 mediaContainer.className = 'relative group';
+                 // Add data attribute for reordering
+            mediaContainer.setAttribute('data-file-index', index);
                 mediaContainer.innerHTML = `
                     ${mediaElement}
                     <button 
@@ -160,6 +163,9 @@
 
             reader.readAsDataURL(file);
         });
+
+        // Initialize sortable after preview is updated
+    initializeSortable();
     }
 
     function removeFile(index) {
@@ -176,6 +182,41 @@
         // Update the file input
         document.getElementById('media-input').files = dataTransfer.files;
     }
+
+    // Add drag and drop functionality
+    function initializeSortable() {
+    new Sortable(document.getElementById('media-preview'), {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onEnd: function() {
+            // Get the new order of media items
+            const order = Array.from(document.querySelectorAll('#media-preview .relative'))
+                .map(el => el.dataset.fileIndex || el.dataset.mediaId);
+            
+            // For new uploads (create)
+            if (document.getElementById('create-post-form')) {
+                uploadedFiles = order.map(index => uploadedFiles[index]);
+                updateFileInput();
+            }
+            // For existing media (edit)
+            else if (document.getElementById('edit-post-form')) {
+                const postId = {{ $post->id ?? 'null' }};
+                if (postId) {
+                    fetch(`/blog/${postId}/reorder-media`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            order: order
+                        })
+                    });
+                }
+            }
+        }
+    });
+}
 </script>
 
 @endsection

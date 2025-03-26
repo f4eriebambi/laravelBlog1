@@ -16,6 +16,7 @@
     
 /* Media Upload Container */
 .media-upload-container {
+     min-height: 300px;
     height: 300px;
     width: 100%;
     border-radius: 10px;
@@ -430,3 +431,8 @@
     background-color: #f3f4f6;
     border-color: #e5e7eb;
 }
+
+.sortable-ghost {
+        opacity: 0.5;
+        background: #c8ebfb;
+    }
