@@ -10,18 +10,24 @@
 </div>
 
 <!-- Form Container -->
-<div class="w-4/5 m-auto pt-10 relative z-10 flex flex-col lg:flex-row gap-8">
+<div class="w-4/5 m-auto pt-10 relative z-10 flex flex-col lg:flex-row gap-8"
+style="
+    background-image: url('/images/deer-bg.jpg');
+    background-attachment: fixed;
+    background-repeat: repeat;
+    background-size: 300px;
+  ">
     <!-- Carousel for Images/Videos -->
-    <div class="w-full lg:w-1/2 relative overflow-hidden">
-        <!-- Carousel Content -->
+    <div class="w-full lg:w-1/2 relative overflow-hidden bg-white rounded-lg shadow-sm"> <!-- Changed background to white -->
+        <!-- Carousel Content - Single item visible at a time -->
         <div id="carouselContent" class="flex transition-transform duration-300 ease-in-out">
             @foreach ($post->media as $media)
-                <div class="min-w-full">
+                <div class="w-full flex justify-center items-center bg-white rounded-lg overflow-hidden" style="min-height: 400px; max-height: 600px; padding-top: 1rem; padding-bottom: 1rem;"> <!-- Changed background to white -->
                     @if ($media->file_type === 'image')
                         <img src="{{ asset('storage/' . $media->file_path) }}" alt="Post Image"
-                            class="w-full h-auto max-h-[600px] object-cover rounded-lg shadow-lg">
+                            class="max-w-full max-h-full object-scale-down">
                     @elseif ($media->file_type === 'video')
-                        <video controls class="w-full h-auto max-h-[600px] object-cover rounded-lg shadow-lg">
+                        <video controls class="w-full h-auto max-h-[600px] object-contain rounded-lg">
                             <source src="{{ asset('storage/' . $media->file_path) }}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -42,21 +48,21 @@
     </div>
 
     <!-- Title and Description Section -->
-    <div class="w-full lg:w-1/2 space-y-6" style="padding-left: 12rem;"> <!-- Added pl-8 to push content to the right -->
+    <div class="w-full lg:w-1/2 space-y-6 pl-12 bg-white p-6 rounded-lg shadow-sm"> <!-- Added white background and padding -->
         <span class="text-gray-500">
             A tale by <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Published on
             {{ date('jS M Y', strtotime($post->updated_at)) }}
         </span>
 
-        <p class="text-xl text-gray-700 leading-8 font-light">
-            {{ $post->description }}
-        </p>
+        <div class="post-description whitespace-pre-wrap text-xl text-gray-700 leading-8 font-light">
+    {{ $post->description }}
+</div>
     </div>
 </div>
 
 <!-- Edit and Delete Buttons (for Admins) -->
 @if (Auth::check() && Auth::id() === 1)
-    <div class="w-4/5 m-auto flex gap-4" style="padding-bottom: 1rem; padding-top: 1rem;">
+    <div class="w-4/5 m-auto flex gap-4 py-4">
         <!-- Edit Button -->
         <a href="/blog/{{ $post->slug }}/edit"
             class="border border-gray-700 text-center bg-gray-50 text-gray-700 py-2 px-4 font-bold text-xl uppercase hover:bg-gray-700 hover:text-gray-50 transition-colors duration-300">
@@ -92,49 +98,64 @@
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('deleteForm').submit(); // Submit the form
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your post has been deleted.",
-                    icon: "success"
-                });
+                document.getElementById('deleteForm').submit();
             }
         });
     }
 
-    // Carousel Functionality
+    // Enhanced Carousel Functionality
     document.addEventListener('DOMContentLoaded', function () {
         const carouselContent = document.getElementById('carouselContent');
         const prevButton = document.getElementById('prevButton');
         const nextButton = document.getElementById('nextButton');
         let currentIndex = 0;
-
         const totalItems = document.querySelectorAll('#carouselContent > div').length;
 
+        // Set initial position and hide other slides
+        function initializeCarousel() {
+            document.querySelectorAll('#carouselContent > div').forEach((slide, index) => {
+                slide.style.display = index === 0 ? 'flex' : 'none';
+            });
+        }
+
         function updateCarousel() {
-            const offset = -currentIndex * 100;
-            carouselContent.style.transform = `translateX(${offset}%)`;
+            // Hide all slides
+            document.querySelectorAll('#carouselContent > div').forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            // Show current slide
+            const currentSlide = document.querySelector(`#carouselContent > div:nth-child(${currentIndex + 1})`);
+            if (currentSlide) {
+                currentSlide.style.display = 'flex';
+            }
         }
 
         if (prevButton && nextButton) {
             prevButton.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                } else {
-                    currentIndex = totalItems - 1;
-                }
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalItems - 1;
                 updateCarousel();
             });
 
             nextButton.addEventListener('click', () => {
-                if (currentIndex < totalItems - 1) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0;
-                }
+                currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
                 updateCarousel();
             });
         }
+
+        // Initialize on load
+        initializeCarousel();
+
+        // Handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalItems - 1;
+                updateCarousel();
+            } else if (e.key === 'ArrowRight') {
+                currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
+                updateCarousel();
+            }
+        });
     });
 </script>
 

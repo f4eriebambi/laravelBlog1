@@ -79,5 +79,9 @@
         @endforeach
     </div>
 @endif
-
+@if ($posts->hasPages())
+    <div class="w-4/5 m-auto py-8">
+        {{ $posts->links() }}
+    </div>
+@endif
 @endsection

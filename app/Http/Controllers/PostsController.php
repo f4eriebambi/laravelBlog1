@@ -21,10 +21,10 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('blog.index')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
-    }
+{
+    return view('blog.index')
+        ->with('posts', Post::orderBy('updated_at', 'DESC')->paginate(12));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -43,37 +43,45 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'media' => 'max:10',
-        'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
-    ]);
+    {
+        $request->validate([
+    'title' => 'required',
+    'description' => 'required',
+    'media' => 'max:10', // Add this line
+    'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
+]);
 
-    $post = Post::create([
-        'title' => $request->input('title'),
-        'description' => $request->input('description'),
-        'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-        'user_id' => auth()->user()->id,
-    ]);
-
-    if ($request->hasFile('media')) {
-        foreach ($request->file('media') as $index => $file) {
-            $path = $file->store('post_media', 'public');
-            $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
-
-            PostMedia::create([
-                'post_id' => $post->id,
-                'file_path' => $path,
-                'file_type' => $fileType,
-                'position' => $index
-            ]);
-        }
+// validation check
+    if ($request->hasFile('media') && count($request->file('media')) > 10) {
+        return back()->withErrors(['media' => 'You can upload a maximum of 10 files.']);
     }
 
-    return redirect('/blog')->with('message', 'Your post has been added!');
-}
+        // Create the post
+        $post = Post::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+            'image_path' => null, // Remove single image upload logic
+            'user_id' => auth()->user()->id,
+        ]);
+
+        // Handle multiple media uploads
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('post_media', 'public'); // Store in 'storage/app/public/post_media'
+                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+
+                PostMedia::create([
+                    'post_id' => $post->id,
+                    'file_path' => $path,
+                    'file_type' => $fileType,
+                ]);
+            }
+        }
+
+        return redirect('/blog')
+            ->with('message', 'Your post has been added!');
+    }
 
     /**
      * Display the specified resource.
@@ -107,62 +115,64 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
-{
-    $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'media' => 'max:10',
-        'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
-    ]);
+    {
+        $request->validate([
+    'title' => 'required',
+    'description' => 'required',
+    'media' => 'max:10', // Add this line
+    'media.*' => 'nullable|file|mimes:jpg,png,jpeg,mp4,mov,avi|max:10240',
+]);
 
-    $post = Post::where('slug', $slug)->firstOrFail();
-    $post->update([
-        'title' => $request->input('title'),
-        'description' => $request->input('description'),
-        'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-        'user_id' => auth()->user()->id,
-    ]);
+        // Find the post
+        $post = Post::where('slug', $slug)->firstOrFail();
 
-    // Update positions of existing media
-    if ($request->has('media_positions')) {
-        foreach ($request->input('media_positions') as $mediaId => $position) {
-            PostMedia::where('id', $mediaId)
-                ->where('post_id', $post->id)
-                ->update(['position' => $position]);
-        }
+        // validate media count
+        $existingMediaCount = $post->media()->count();
+    $deletedCount = $request->filled('deleted_media') ? count(explode(',', $request->input('deleted_media'))) : 0;
+    $newFilesCount = $request->hasFile('media') ? count($request->file('media')) : 0;
+
+    if (($existingMediaCount - $deletedCount + $newFilesCount) > 10) {
+        return back()->withErrors(['media' => 'You can have a maximum of 10 files.']);
     }
 
-    // Delete marked media
-    if ($request->filled('deleted_media')) {
-        $deletedIds = explode(',', $request->input('deleted_media'));
-        foreach ($deletedIds as $id) {
-            $media = PostMedia::find($id);
-            if ($media) {
-                Storage::disk('public')->delete($media->file_path);
-                $media->delete();
+        // Update the post (FIXED: Replace [...] with your original code)
+        $post->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+            'user_id' => auth()->user()->id,
+        ]);
+
+        // Delete marked media
+        if ($request->filled('deleted_media')) {
+            $deletedIds = explode(',', $request->input('deleted_media'));
+            
+            foreach ($deletedIds as $id) {
+                $media = PostMedia::find($id);
+                if ($media) {
+                    // Delete the file from storage
+                    Storage::disk('public')->delete($media->file_path);
+                    $media->delete();
+                }
             }
         }
-    }
 
-    // Add new media
-    if ($request->hasFile('media')) {
-        $currentMaxPosition = PostMedia::where('post_id', $post->id)->max('position') ?? -1;
-        
-        foreach ($request->file('media') as $index => $file) {
-            $path = $file->store('post_media', 'public');
-            $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
+        // Handle new uploads (keep your existing code)
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $file) {
+                $path = $file->store('post_media', 'public');
+                $fileType = str_starts_with($file->getMimeType(), 'image') ? 'image' : 'video';
 
-            PostMedia::create([
-                'post_id' => $post->id,
-                'file_path' => $path,
-                'file_type' => $fileType,
-                'position' => $currentMaxPosition + $index + 1
-            ]);
+                PostMedia::create([
+                    'post_id' => $post->id,
+                    'file_path' => $path,
+                    'file_type' => $fileType,
+                ]);
+            }
         }
-    }
 
-    return redirect('/blog')->with('message', 'Your post has been updated!');
-}
+        return redirect('/blog')->with('message', 'Your post has been updated!');
+    }
 
     /**
      * Remove the specified resource from storage.
