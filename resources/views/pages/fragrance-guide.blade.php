@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', '𓇢𓆸 Unlocking the Power of Perfume | offduty ⋆｡☆ faerie')
+
 @section('content')
-<div class="fragrance-guide-background min-h-screen" style="background-image: url('https://i.pinimg.com/736x/28/84/ec/2884ec7c2571def984c0545e672b297f.jpg');
+<div class="fragrance-guide-background min-h-screen" style="background-image: url('/images/bubbles.jpg');
         background-size: cover;
         background-position: center center;
         background-repeat: repeat;
@@ -24,7 +26,7 @@
             <section class="py-8 relative">
                 <div class="flex flex-col md:flex-row gap-8 items-center">
                     <div class="md:w-1/3">
-                        <img src="https://i.pinimg.com/736x/a6/1e/e2/a61ee2ae8f30e52c71ac855f36a437da.jpg" 
+                        <img src="/images/mad-love.jpg" 
                              alt="Mad Love Perfume" 
                              class="w-full h-80 object-contain mx-auto hover:scale-105 transition-transform duration-300"
                              style="filter: grayscale(20%) contrast(90%); max-height: 400px;">
@@ -92,7 +94,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <div class="group">
                         <div class="overflow-hidden rounded-lg">
-                            <img src="https://i.pinimg.com/736x/d0/a1/2a/d0a12a67028209c1713e6f381ed42e23.jpg" 
+                            <img src="/images/tomFord2.jpg" 
                                  alt="Floral Fragrances" 
                                  class="w-full h-64 object-cover mb-2 ">
                         </div>
@@ -100,7 +102,7 @@
                     </div>
                     <div class="group">
                         <div class="overflow-hidden rounded-lg">
-                            <img src="https://fimgs.net/mdimg/perfume/375x500.98448.jpg" 
+                            <img src="/images/kikoDD.jpg" 
                                  alt="Citrus Fragrances" 
                                  class="w-full h-64 object-cover mb-2 ">
                         </div>
@@ -108,7 +110,7 @@
                     </div>
                     <div class="group">
                         <div class="overflow-hidden rounded-lg">
-                            <img src="https://i.pinimg.com/736x/c9/89/b3/c989b3a396682382056cd9ae26a91a24.jpg" 
+                            <img src="/images/saltedMuse.jpg" 
                                  alt="Woody Fragrances" 
                                  class="w-full h-64 object-cover mb-2 ">
                         </div>
@@ -116,7 +118,7 @@
                     </div>
                     <div class="group">
                         <div class="overflow-hidden rounded-lg">
-                            <img src="https://i.pinimg.com/736x/46/82/c3/4682c3698c78546bc5f9ea4abde28f33.jpg" 
+                            <img src="/images/afternoon-delight.jpg" 
                                  alt="Gourmand Fragrances" 
                                  class="w-full h-64 object-cover mb-2 ">
                         </div>
@@ -248,7 +250,7 @@
 <div class="text-center mt-16 max-w-3xl mx-auto p-8 rounded-xl shadow-sm relative overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
-        <img src="https://i.pinimg.com/736x/0e/4b/3d/0e4b3dd80c164898dc545f2d0a4efc4b.jpg" 
+        <img src="/images/backdrop-girl.jpg" 
              alt="Perfume aesthetic background" 
              class="w-full h-full object-cover"
              style="filter: brightness(0.8);">

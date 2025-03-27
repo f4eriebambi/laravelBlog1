@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'A Love Letter to Style ♡ | offduty ⋆｡☆ faerie')
+
 @section('content')
-<div class="min-h-screen" style="background-image: url('https://i.pinimg.com/474x/46/b3/55/46b355c1ebe7e1d8e17af87eb8deb79d.jpg');
+<div class="min-h-screen" style="background-image: url('/images/ballet-shoes.jpg');
         background-size: cover;
         background-position: center center;
         background-repeat: repeat;
@@ -39,7 +41,7 @@
                     </p>
                 </div>
                  <div class="rounded-lg overflow-hidden">
-                    <img src="https://i.pinimg.com/originals/92/c0/b5/92c0b51904f9b31890b180b946c1dcfc.gif" alt="Runway inspiration" class="w-full h-64 object-contain">
+                    <img src="/images/runway-chronicles.gif" alt="Runway inspiration" class="w-full h-64 object-contain">
                 </div>
             </div>
         </section>
@@ -89,14 +91,14 @@
                     <div class="grid grid-cols-2 gap-4">
                         @for($i = 0; $i < 2; $i++)
                         <div class="border border-[#444e71] rounded overflow-hidden">
-                            <img src="https://i.pinimg.com/736x/c1/7c/86/c17c86c8c65832689a72ee3063e923a6.jpg" alt="Beauty tip {{$i+1}}" class="w-full h-32 object-cover">
+                            <img src="/images/beauty-img.jpg" alt="Beauty tip {{$i+1}}" class="w-full h-32 object-cover">
                         </div>
                         @endfor
                     </div>
                 </div>
                 <div class="rounded-lg overflow-hidden border border-[#444e71] hover:scale-105 transition-transform duration-400">
                     <a href="https://youtu.be/g_egyx3GLys?si=SVm8yk8xKI7elc0x" target="_blank" class="block">
-            <img src="https://img.youtube.com/vi/g_egyx3GLys/maxresdefault.jpg" alt="Beauty secrets" class="w-full h-96 object-cover hover:opacity-90 transition">
+            <img src="/images/alexVogueBS.jpg" alt="Beauty secrets" class="w-full h-96 object-cover hover:opacity-90 transition">
         </a>
                 </div>
             </div>
@@ -107,22 +109,22 @@
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">🎀 Style & Aesthetic Moodboards</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                 <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/84/ce/b4/84ceb417863ff0033d7bae3c96feedcd.jpg" alt="Moodboard 1" class="w-full h-80 object-cover">
+            <img src="/images/mdbd1.jpg" alt="Moodboard 1" class="w-full h-80 object-cover">
         </div>
         <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/92/e6/11/92e6119b25805d89f636fa5c0ea774b9.jpg" alt="Moodboard 2" class="w-full h-80 object-cover">
+            <img src="/images/mdbd2.jpg" alt="Moodboard 2" class="w-full h-80 object-cover">
         </div>
         <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/d0/b2/32/d0b232bb651edbd85ce8bd1e5e12c0ea.jpg" alt="Moodboard 3" class="w-full h-80 object-cover">
+            <img src="/images/mdbd3.jpg" alt="Moodboard 3" class="w-full h-80 object-cover">
         </div>
         <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/e4/2c/01/e42c019b89464eadc7c51622608a1894.jpg" alt="Moodboard 4" class="w-full h-80 object-cover">
+            <img src="/images/mdbd4.jpg" alt="Moodboard 4" class="w-full h-80 object-cover">
         </div>
         <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/5e/13/cd/5e13cde7856aca77fc8deafae7b4f5ce.jpg" alt="Moodboard 5" class="w-full h-80 object-cover">
+            <img src="/images/mdbd5.jpg" alt="Moodboard 5" class="w-full h-80 object-cover">
         </div>
         <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
-            <img src="https://i.pinimg.com/736x/32/0a/dd/320add36510d8ed557834f65ca53c723.jpg" alt="Moodboard 6" class="w-full h-80 object-cover">
+            <img src="/images/mdbd6.jpg" alt="Moodboard 6" class="w-full h-80 object-cover">
         </div>
             </div>
             <p class="text-gray-600 mb-4">
@@ -139,13 +141,13 @@
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="grid grid-cols-3 gap-4">
                     <div class="border border-[#444e71] rounded overflow-hidden">
-                    <img src="https://i.pinimg.com/736x/d7/6e/a6/d76ea686728977277467590a44d914d3.jpg" alt="Style guide 1" class="w-full h-48 object-cover">
+                    <img src="/images/ji-style1.jpg" alt="Style guide 1" class="w-full h-48 object-cover">
                 </div>
                 <div class="border border-[#444e71] rounded overflow-hidden">
-                    <img src="https://i.pinimg.com/736x/71/b6/00/71b60045b062348d633fe09fbf13b06e.jpg" alt="Style guide 2" class="w-full h-48 object-cover">
+                    <img src="/images/ji-style2.jpg" alt="Style guide 2" class="w-full h-48 object-cover">
                 </div>
                 <div class="border border-[#444e71] rounded overflow-hidden">
-                    <img src="https://i.pinimg.com/736x/43/84/95/4384952e1278e1d952e1c06fd56cc212.jpg" alt="Style guide 3" class="w-full h-48 object-cover">
+                    <img src="/images/ji-style3.jpg" alt="Style guide 3" class="w-full h-48 object-cover">
                 </div>
                 </div>
                 <div style="
@@ -180,10 +182,10 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                 <div class="border border-[#444e71] rounded overflow-hidden hover:scale-105 transition-transform duration-400">
-                    <img src="https://i.pinimg.com/736x/02/0d/1c/020d1cb7aaa347a87dc4bb3f08b7ea4d.jpg" alt="Scent pairing 1" class="w-full h-35 object-cover">
+                    <img src="/images/matchaPerf.jpg" alt="Scent pairing 1" class="w-full h-35 object-cover">
                 </div>
                 <div class="border border-[#444e71] rounded overflow-hidden hover:scale-105 transition-transform duration-400">
-                    <img src="https://i.pinimg.com/736x/22/75/b6/2275b6d9ab217266238254c765de60ea.jpg" alt="Scent pairing 2" class="w-full h-35 object-cover">
+                    <img src="/images/girl-style.jpg" alt="Scent pairing 2" class="w-full h-35 object-cover">
                 </div>
             </div>
                 </div>
