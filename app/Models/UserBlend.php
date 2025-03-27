@@ -9,19 +9,26 @@ class UserBlend extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'notes', 'perfume_name', 'recommended_perfume_id'];
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'user_id', 
+        'notes', 
+        'perfume_name', 
+        'recommended_perfume_id',
+        'created_at',
+        'colors'
+    ];
+    
+    protected $dates = [
+        'created_at' // Add this line to cast to Carbon
+    ];
 
-    /**
-     * Get the user that owns the blend.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the recommended perfume for this blend.
-     */
     public function recommendedPerfume()
     {
         return $this->belongsTo(PerfumeRecommendation::class, 'recommended_perfume_id');

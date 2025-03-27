@@ -113,6 +113,8 @@ public function mix(Request $request)
             'name' => $recommendedPerfume->name,
             'description' => $recommendedPerfume->description,
             'partial_match' => $partialMatch, // Add partial match flag
+            'notes' => implode(', ', $selectedNotes), 
+    'perfume_id' => $recommendedPerfume->id
         ]);
     } catch (\Exception $e) {
         // Log the error and return a user-friendly message
@@ -122,30 +124,6 @@ public function mix(Request $request)
         ], 500);
     }
 }
-
-    /**
-     * Save the user's blend to their profile.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function save(Request $request)
-    {
-        // Ensure the user is logged in
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to save blends.');
-        }
-
-        // Create a new user blend
-        $blend = new UserBlend();
-        $blend->user_id = Auth::id();
-        $blend->notes = $request->notes;
-        $blend->perfume_name = $request->perfume_name;
-        $blend->save();
-
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Blend saved to your Fragrance Wardrobe!');
-    }
 
     /**
      * Generate a whimsical name for a custom blend.
@@ -159,4 +137,96 @@ public function mix(Request $request)
         $nouns = ['Serenade', 'Whisper', 'Embrace', 'Mirage', 'Eclipse'];
         return $adjectives[array_rand($adjectives)] . ' ' . $nouns[array_rand($nouns)];
     }
+
+    /**
+     * Display saved fragrance blends.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function wardrobe()
+{
+    $blends = UserBlend::with('recommendedPerfume')
+        ->where('user_id', auth()->id())
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('special-feature.fragrance-wardrobe', compact('blends'));
+}
+
+    /**
+     * Delete a saved fragrance blend.
+     *
+     * @param  \App\Models\UserBlend  $blend
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(UserBlend $blend)
+{
+    try {
+        // Verify the blend belongs to the authenticated user
+        if ($blend->user_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $blend->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Blend deleted successfully'
+        ]);
+
+    } catch (\Exception $e) {
+        \Log::error('Delete failed:', [
+            'error' => $e->getMessage(),
+            'blend_id' => $blend->id
+        ]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Server error: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+/**
+ * Save a custom blend to the user's wardrobe.
+ */
+public function saveBlend(Request $request)
+{
+    $request->validate([
+        'blend_name' => 'required|string',
+        'blend_notes' => 'required|string',
+        'colors' => 'required|string',
+        'perfume_id' => 'nullable|integer'
+    ]);
+
+    try {
+        // Check if user already has 6 blends
+        $blendCount = UserBlend::where('user_id', auth()->id())->count();
+        if ($blendCount >= 6) {
+            return response()->json([
+                'success' => false,
+                'message' => 'limit_reached'
+            ]);
+        }
+
+        UserBlend::create([
+            'user_id' => auth()->id(),
+            'notes' => $request->blend_notes,
+            'perfume_name' => $request->blend_name,
+            'recommended_perfume_id' => $request->perfume_id,
+            'colors' => $request->colors,
+            'created_at' => now()
+        ]);
+
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        \Log::error('Save failed:', [
+            'error' => $e->getMessage(),
+            'data' => $request->all()
+        ]);
+        return response()->json(['success' => false], 500);
+    }
+}
 }

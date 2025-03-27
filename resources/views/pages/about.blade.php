@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Faerie\'s Story | offduty ⋆｡☆ faerie')
+
 @section('content')
     <!-- Hero Section with Background Image -->
     <div class="about-hero">

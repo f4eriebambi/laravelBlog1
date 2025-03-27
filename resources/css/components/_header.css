@@ -11,7 +11,7 @@
     z-index: 1;
     right: -50px; /* Adjusted to align with the trigger */
     top: 100%; /* Positions the dropdown directly below the trigger */
-    min-width: 160px;
+    min-width: 165px;
     border-radius: 8px; /* Rounded corners */
     overflow: hidden;
     border: 1px solid #e5e7eb; /* Added border */
@@ -178,7 +178,7 @@
 /* Sidenav Toggle Button */
 .sidenav-toggle {
     position: fixed;
-    top: 103px; /* Adjusted position */
+    top: 104px; /* Adjusted position */
     left: 10px;
     z-index: 1001;
     cursor: pointer;

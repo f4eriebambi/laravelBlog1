@@ -50,7 +50,7 @@
             <!-- Description Input -->
             <textarea 
                 name="description"
-                placeholder="Description..."
+                placeholder="Set the Scene..."
                 class="py-10 bg-transparent block border-b-2 w-full h-60 text-xl outline-none focus:border-blue-500 transition-colors duration-300">{{ $post->description }}</textarea>
         </div>
 
@@ -126,9 +126,12 @@
 <script>
     // Track deleted media IDs
     let deletedMediaIds = [];
+    const MAX_FILES = 10;
+    let newFiles = [];
 
-    // Delete Media Handling
-    document.addEventListener('DOMContentLoaded', function () {
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Delete Media Handling
         document.querySelectorAll('.delete-existing-media').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -145,88 +148,88 @@
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Add to deletion list
                         deletedMediaIds.push(mediaId);
                         document.getElementById('deleted-media-ids').value = deletedMediaIds.join(',');
-
-                        // Visual feedback: Grey out the media element
                         mediaElement.style.opacity = '0.3';
                         mediaElement.querySelector('button').disabled = true;
-
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your media has been deleted.",
-                            icon: "success"
-                        });
+                        Swal.fire("All Gone!", "Your media has been deleted—time to make space for new treasures", "success");
                     }
                 });
             });
         });
+
+        // Initialize Sortable for EXISTING media
+        new Sortable(document.getElementById('existing-media'), {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function() {
+                const order = Array.from(document.querySelectorAll('#existing-media .relative'))
+                    .map(el => el.dataset.mediaId);
+
+                    // Debug: Log what we're sending
+        console.log('Sending order:', order);
+                
+                fetch(`/blog/{{ $post->id }}/reorder-media`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ order: order })
+                })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Reorder success:', data);
+        })
+        .catch(error => {
+            console.error('Reorder error:', error);
+            Swal.fire('Error', 'Failed to save new order', 'error');
+        });
+            }
+        });
+
+        // Image Preview Handling
+        document.getElementById('media-input').addEventListener('change', function(event) {
+            const existingMediaCount = document.querySelectorAll('#existing-media > div:not([style*="opacity: 0.3"])').length;
+            
+            if (existingMediaCount - deletedMediaIds.length + newFiles.length + event.target.files.length > MAX_FILES) {
+                Swal.fire({
+                    title: 'Too Many Files',
+                    text: `Maximum ${MAX_FILES} files allowed. You have ${existingMediaCount - deletedMediaIds.length + newFiles.length} files.`,
+                    icon: 'warning'
+                });
+                this.value = '';
+                return;
+            }
+
+            newFiles = [...newFiles, ...Array.from(event.target.files)];
+            updatePreview();
+        });
     });
-
-    // Image Preview Handling
-    document.getElementById('media-input').addEventListener('change', function(event) {
-        const previewContainer = document.getElementById('media-preview');
-        previewContainer.innerHTML = '';
-
-        const files = event.target.files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const mediaElement = file.type.startsWith('image') 
-                    ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
-                    : `<video controls class="w-full h-72 object-cover rounded-lg">
-                          <source src="${e.target.result}" type="${file.type}">
-                          Your browser does not support the video tag.
-                       </video>`;
-
-                const mediaContainer = document.createElement('div');
-                mediaContainer.className = 'relative group';
-                mediaContainer.innerHTML = `
-                    ${mediaElement}
-                    <button 
-                        type="button" 
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onclick="removeFile(${i})"
-                    >
-                        ✕
-                    </button>
-                `;
-
-                previewContainer.appendChild(mediaContainer);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Remove new media file from preview
-    function removeFile(index) {
-        const previewContainer = document.getElementById('media-preview');
-        const fileInput = document.getElementById('media-input');
-        const files = Array.from(fileInput.files);
-        files.splice(index, 1);
-
-        // Update the file input
-        const dataTransfer = new DataTransfer();
-        files.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-
-        // Update the preview
-        updatePreview();
-    }
 
     // Update media preview
     function updatePreview() {
         const previewContainer = document.getElementById('media-preview');
         previewContainer.innerHTML = '';
 
-        const files = document.getElementById('media-input').files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
+        const existingMediaCount = document.querySelectorAll('#existing-media > div:not([style*="opacity: 0.3"])').length;
+        const totalFiles = existingMediaCount - deletedMediaIds.length + newFiles.length;
 
+        // Show file count
+        const countElement = document.createElement('div');
+        countElement.className = 'col-span-full text-center mb-4 text-gray-600';
+        countElement.textContent = `Files selected: ${totalFiles}/${MAX_FILES}`;
+        previewContainer.appendChild(countElement);
+
+        newFiles.forEach((file, index) => {
+            const reader = new FileReader();
             reader.onload = function(e) {
                 const mediaElement = file.type.startsWith('image') 
                     ? `<img src="${e.target.result}" alt="Preview" class="w-full h-72 object-cover rounded-lg">`
@@ -237,22 +240,43 @@
 
                 const mediaContainer = document.createElement('div');
                 mediaContainer.className = 'relative group';
+                mediaContainer.setAttribute('data-file-index', index);
                 mediaContainer.innerHTML = `
                     ${mediaElement}
-                    <button 
-                        type="button" 
-                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onclick="removeFile(${i})"
-                    >
+                    <button type="button" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" onclick="removeFile(${index})">
                         ✕
                     </button>
                 `;
-
                 previewContainer.appendChild(mediaContainer);
             };
             reader.readAsDataURL(file);
-        }
+        });
+
+        // Initialize Sortable for NEW media preview
+        new Sortable(previewContainer, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function() {
+                const newOrder = Array.from(document.querySelectorAll('#media-preview .relative'))
+                    .map(el => parseInt(el.dataset.fileIndex));
+                
+                newFiles = newOrder.map(index => newFiles[index]);
+                
+                const dataTransfer = new DataTransfer();
+                newFiles.forEach(file => dataTransfer.items.add(file));
+                document.getElementById('media-input').files = dataTransfer.files;
+            }
+        });
+    }
+
+    function removeFile(index) {
+        newFiles.splice(index, 1);
+        const dataTransfer = new DataTransfer();
+        newFiles.forEach(file => dataTransfer.items.add(file));
+        document.getElementById('media-input').files = dataTransfer.files;
+        updatePreview();
     }
 </script>
+
 
 @endsection

@@ -16,6 +16,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -50,10 +51,11 @@
         <!-- Sidenav -->
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">Page 1 (WIP)</a>
-            <a href="#">Page 2 (WIP)</a>
-            <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
+            <a href="/">Where It All Begins ✦</a>
+            <a href="/fragrance-guide">𓇢𓆸 Unlocking the Power of Perfume</a>
+            <a href="/style-beauty">A Love Letter to Style ♡</a>
             <a href="/contact">A Message for Me?</a>
+            <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
         </div>
 
         <!-- Sidenav Toggle Button -->
@@ -83,13 +85,14 @@
                             @endif
                         @else
                             <div class="adminDropdown">
-                                <span class="cursor-pointer">{{ Auth::user()->name }}</span>
-                                @if (Auth::id() === 1)
-                                    <div class="adminDropdown-content">
-                                        <a href="/blog/create">Create Post</a>
-                                    </div>
-                                @endif
-                            </div>
+    <span class="cursor-pointer">{{ Auth::user()->name }}</span>
+    <div class="adminDropdown-content">
+        @if (Auth::id() === 1)
+            <a href="/blog/create">Create Post</a>
+        @endif
+        <a href="/fragrance-wardrobe">My Fragrance Wardrobe</a>
+    </div>
+</div>
 
                             <a href="{{ route('logout') }}" class="no-underline hover:underline"
                                 onclick="event.preventDefault();

@@ -1,0 +1,12 @@
+.video-container {
+    aspect-ratio: 9/16; /* Adjust for your video proportions */
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.perfume-float {
+    animation: float 6s ease-in-out infinite;
+}
