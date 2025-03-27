@@ -46,19 +46,19 @@
                         <div class="blend-card relative group bg-white bg-opacity-80 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
                             <!-- Action Buttons (shown on hover) -->
                             <div class="absolute top-4 left-0 right-0 py-2 flex justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+    <div class="absolute top-4 right-4 flex space-x-2 z-10">
     @if($blend->recommended_perfume_id)
         <a href="{{ $blend->recommendedPerfume->buy_link ?? '#' }}" 
            target="_blank"
-           class="perfumeRec-modal-button"
-           style="padding: 0.4rem 1.2rem; font-size: 0.95rem;">
+           class="perfumeRec-modal-button px-3 py-1 text-sm">
             Buy
         </a>
     @endif
-    <button class="delete-blend perfumeRec-modal-button" 
-            data-blend-id="{{ $blend->id }}"
-            style="padding: 0.4rem 1.2rem; font-size: 0.95rem; margin-left: 12px;">
+    <button class="delete-blend perfumeRec-modal-button px-3 py-1 text-sm" 
+            data-blend-id="{{ $blend->id }}">
         Remove
     </button>
+</div>
 </div>
                             <!-- Perfume Bottle -->
                             <div class="flex flex-col items-center mb-4">
@@ -110,25 +110,32 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/special-feature/fragrance-wardrobe/${blendId}`, {
+                        fetch(`/fragrance-wardrobe/${blendId}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                 'Content-Type': 'application/json'
                             }
                         })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire(
-                                    'A Chapter Closes.',
-                                    'This scent has been removed, making way for a new creation.',
-                                    'success'
-                                ).then(() => {
-                                    window.location.reload();
-                                });
-                            }
-                        })
+                        .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'A Chapter Closes.',
+                                'This scent has been removed, making way for a new creation.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            throw new Error(data.message || 'Deletion failed');
+                        }
+                    })
                         .catch(error => {
                             Swal.fire(
                                 'Error',

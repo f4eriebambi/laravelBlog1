@@ -12,7 +12,7 @@
         <div class="w-4/5 m-auto py-10" style="background-color: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(2px);">
     <!-- Hero Header -->
-    <div class="w-full py-16 bg-gradient-to-b from-[#1d1d26] to-[#1a1f33]">
+    <div class="w-full py-16">
         <div class="w-4/5 m-auto text-center">
             <h1 class="text-5xl font-bold text-gray-800 dm-serif-text-regular">
                 The Dollhouse Diaries
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="w-4/5 m-auto space-y-16 py-12 bg-black/60 backdrop-blur-sm">
+    <div class="w-4/5 m-auto space-y-16 py-12">
         <!-- Runway to Reality Section -->
         <section class="py-8">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">Runway Chronicles</h2>
@@ -47,7 +47,7 @@
         </section>
 
         <!-- Fashion in Motion Section -->
-        <section class="py-8 bg-[#1d1d26] bg-opacity-50 p-6 rounded-lg">
+        <section class="py-8 p-6 rounded-lg">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular">📹 Fashion in Motion</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="rounded-lg overflow-hidden border border-[#444e71]">
@@ -139,7 +139,7 @@
         <section class="py-8">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">The Style Guide</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 gap-4">
                     <div class="border border-[#444e71] rounded overflow-hidden">
                     <img src="/images/ji-style1.jpg" alt="Style guide 1" class="w-full h-48 object-cover">
                 </div>

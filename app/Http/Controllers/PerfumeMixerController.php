@@ -161,14 +161,32 @@ public function mix(Request $request)
      */
     public function destroy(UserBlend $blend)
 {
-    // Ensure user can only delete their own blends
-    if ($blend->user_id !== auth()->id()) {
-        abort(403);
+    try {
+        // Verify the blend belongs to the authenticated user
+        if ($blend->user_id !== auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        $blend->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Blend deleted successfully'
+        ]);
+
+    } catch (\Exception $e) {
+        \Log::error('Delete failed:', [
+            'error' => $e->getMessage(),
+            'blend_id' => $blend->id
+        ]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Server error: ' . $e->getMessage()
+        ], 500);
     }
-
-    $blend->delete();
-
-    return response()->json(['success' => true]);
 }
 
 /**

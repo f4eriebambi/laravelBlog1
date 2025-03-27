@@ -63,7 +63,8 @@ Route::post('/perfume-mixer/mix', [PerfumeMixerController::class, 'mix']);
 Route::get('/fragrance-wardrobe', [PerfumeMixerController::class, 'wardrobe'])->middleware('auth');
 
 // delete a saved fragrance blend
-Route::delete('/fragrance-wardrobe/{blend}', [PerfumeMixerController::class, 'destroy'])->middleware('auth');
+Route::delete('/fragrance-wardrobe/{blend}', [PerfumeMixerController::class, 'destroy'])
+     ->name('fragrance-wardrobe.destroy');
 
 // Save a fragrance blend
 Route::post('/save-blend', [PerfumeMixerController::class, 'saveBlend'])->middleware('auth');
