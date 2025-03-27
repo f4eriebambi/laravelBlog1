@@ -70,3 +70,11 @@ Route::post('/save-blend', [PerfumeMixerController::class, 'saveBlend'])->middle
 
 // Display the contact page
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+Route::get('/fragrance-guide', function () {
+    return view('pages.fragrance-guide');
+})->name('fragrance.guide');
+
+Route::get('/style-beauty', function () {
+    return view('pages.style-beauty');
+})->name('style.beauty');

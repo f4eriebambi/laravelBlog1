@@ -51,8 +51,9 @@
         <!-- Sidenav -->
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">Page 1 (WIP)</a>
-            <a href="#">Page 2 (WIP)</a>
+            <a href="/">Where It All Begins ✦</a>
+            <a href="/fragrance-guide">𓇢𓆸 Unlocking the Power of Perfume</a>
+            <a href="/style-beauty">A Love Letter to Style ♡</a>
             <a href="/contact">A Message for Me?</a>
             <a href="/perfume-mixer">Craft Your Signature Scent ✦ Blend. Breathe. Become. </a>
         </div>

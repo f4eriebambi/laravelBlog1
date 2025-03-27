@@ -53,7 +53,7 @@
                 </p>
             </div>
         
-            <a href="/blog" 
+            <a href="/fragrance-guide" 
    class="uppercase bg-[#9f0000] text-gray-50 text-s font-extrabold py-3 px-8 hover:bg-gray-50 hover:text-[#9f0000] border border-transparent hover:border-[#9f0000] transition-colors duration-300 inline-flex items-center" 
    style="max-width: 42%;">
     Come Indulge
