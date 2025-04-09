@@ -62,70 +62,101 @@ https://github.com/f4eriebambi/laravelBlog1
     ✦ Blend recommendation system
 
 ## ✅ Prerequisites
-- PHP 7.3+ ࣪  (miniumum)
+- PHP 7.3+ ࣪  (minimum)
 - Composer ˖  
-- Node.js 12.13.0+ 𓂃  (miniumum)
+- Node.js 12.13.0+ 𓂃  (minimum)
 - MySQL 5.7+ ִֶָ  (via XAMPP recommended)
 
 ## 📥 Installation ⋆｡☆
-1. Download Zip:
-Click "Code" → "Download ZIP" on GitHub
-Unzip to: C:\xampp\htdocs\laravelBlog1
 
-・・・・・・・・・OR・・・・・・・・・
+### Option 1: Download ZIP
+1. Click "Code" → "Download ZIP" on GitHub
+2. Unzip to your web server directory (e.g. for XAMPP):
+```bash
+C:\xampp\htdocs\laravelBlog1
+```
 
-1. Clone repository:
+### Option 2: Clone Repository
+```
 git clone https://github.com/f4eriebambi/laravelBlog1.git
 cd laravelBlog1
+```
 
-2. Install dependencies:
+### Install Dependencies
+Run these commands in your project directory:
+```
 composer install
 npm install
+```
 
-3. Configure environment:
+### Environment Setup
+1. Copy the example environment file and create your `.env` configuration:
+```
 cp .env.example .env
+```
+
+2. Generate your application encryption key:
+```
 php artisan key:generate
+```
 
-4. Database setup:
+### Database Configuration
+1. Create a MySQL database:
+```
 mysql -u root -p -e "CREATE DATABASE laravelblog"
+```
 
-5. Update .env:
+2. Update your `.env` file with:
+```
 DB_DATABASE=laravelblog
 DB_USERNAME=root
 DB_PASSWORD=your_password
+```
 
-6. Finalize:
+### Final Setup
+Run these commands to complete installation:
+```
 php artisan migrate --seed
 php artisan serve
 npm run dev
+```
 
 ♡・・・・・・♡・・・・・・♡・・・・・・♡
 
-🌸 First-Time User Guide
-1. Visit http://localhost:8000/perfume-mixer
+## 🌸 First-Time User Guide
+1. Visit ```http://localhost:8000/perfume-mixer```
 2. Try blending:
     ✦ Select 3 notes → Click "Mix"
     ✦ See your custom creation
-4. Register to save blends
-5. View saved scents in "Fragrance Wardrobe"
+3. Register to save blends
+4. View saved scents in "Fragrance Wardrobe"
 
 ## 🌸 Testing Flow
-1. Visit /perfume-mixer as guest  
+1. Visit `/perfume-mixer` as guest  
 2. Create test blend → saving to 'Fragrance Wardrobe' triggers:  
-   if (!auth) SweetAlert('Login to save blends!')
+   ```if (!auth) SweetAlert('Login to save blends!')```
 3. Login/register → Blend saves to Wardrobe
-4. Verify in database: user_blends table
+4. Verify in database: ```user_blends``` table
 
-📞 Troubleshooting
-- Port 8000 busy? Use:
-    ✦ php artisan serve --port=8080
-- Node.js errors? 
-    ✦ Reinstall Node v12
-- White screen? Run:
-    ✦ php artisan cache:clear
-    ✦ php artisan view:clear
-    ✦ php artisan route:clear
-    ✦ php artisan config:clear
+## 📞 Troubleshooting
+- **Port 8000 busy?** Use:
+```
+php artisan serve --port=8080
+```
+
+- **Node.js errors?** 
+```
+nvm install 12
+nvm use 12
+```
+
+- **White screen?** Run:
+```
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+php artisan config:clear
+```
 
 ## 𐦍 Project Roots  
 ✦ Visual DNA: Tumblr's soft grunge  
