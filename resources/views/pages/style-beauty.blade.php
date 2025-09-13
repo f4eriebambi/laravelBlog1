@@ -14,7 +14,7 @@
     <!-- Hero Header -->
     <div class="w-full py-16">
         <div class="w-4/5 m-auto text-center">
-            <h1 class="text-5xl font-bold text-gray-800 dm-serif-text-regular">
+            <h1 class="text-4xl font-bold text-gray-800 dm-serif-text-regular">
                 The Dollhouse Diaries
             </h1>
             <p class="text-xl text-gray-600 mb-8 pt-4 max-w-3xl mx-auto">
@@ -23,10 +23,10 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="w-4/5 m-auto space-y-16 py-12">
-        <!-- Runway to Reality Section -->
-        <section class="py-8">
+    <!-- Main Content - Reduced spacing from space-y-16 to space-y-8 -->
+    <div class="w-4/5 m-auto space-y-8 py-8">
+        <!-- Runway to Reality Section - Reduced padding -->
+        <section class="py-4">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">Runway Chronicles</h2>
             <p class="text-gray-600 mb-6" style="font-size: 1.2rem;">
                 Capturing fashion's most mesmerizing moments
@@ -46,8 +46,8 @@
             </div>
         </section>
 
-        <!-- Fashion in Motion Section -->
-        <section class="py-8 p-6 rounded-lg">
+        <!-- Fashion in Motion Section - Reduced padding -->
+        <section class="py-4 p-6 rounded-lg">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular">📹 Fashion in Motion</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="rounded-lg overflow-hidden border border-[#444e71]">
@@ -56,29 +56,27 @@
             Your browser does not support the video tag.
         </video>
     </div>
-                <div style="
-    font-size: 1.1rem;
-">
+                <div style="font-size: 1.1rem;">
                    <div class="text-gray-600 space-y-4">
     <p>
-        There’s something almost hypnotic about the way fabric moves—how it breathes, flows, and tells a story with every step. The soft sway of chiffon catching the air like a whispered secret, the bold, structured confidence of a perfectly tailored suit, the glistening allure of sequins shimmering under flashing lights. Fashion is more than just clothing; it’s movement, attitude, a living expression of beauty.
+        There's something almost hypnotic about the way fabric moves—how it breathes, flows, and tells a story with every step. The soft sway of chiffon catching the air like a whispered secret, the bold, structured confidence of a perfectly tailored suit, the glistening allure of sequins shimmering under flashing lights. Fashion is more than just clothing; it's movement, attitude, a living expression of beauty.
     </p>
     <p>
-        Step into the dreamscape of Dolce & Gabbana’s 1995 runway—where Old Hollywood glamour meets sultry Italian allure. Picture the slow-motion elegance of silk dresses trailing behind statuesque models, the edge of lace corsets paired with sleek leather, the seductive confidence of a deep red lip and a piercing gaze. These are the cinematic moments that make fashion feel like poetry in motion.
+        Step into the dreamscape of Dolce & Gabbana's 1995 runway—where Old Hollywood glamour meets sultry Italian allure. Picture the slow-motion elegance of silk dresses trailing behind statuesque models, the edge of lace corsets paired with sleek leather, the seductive confidence of a deep red lip and a piercing gaze. These are the cinematic moments that make fashion feel like poetry in motion.
     </p>
     <p>
         Here, you'll find curated runway clips, designer showcases, and those breathtaking fashion moments that transport you into another world. The way a garment moves is just as important as how it looks—every swish, every flicker of fabric under the lights, every powerful strut down the runway.
     </p>
     <p>
-        Let’s watch, admire, and let the rhythm of fashion inspire us to embody the elegance, drama, and artistry in our own wardrobes. After all, style is not just what you wear—it’s how you wear it.
+        Let's watch, admire, and let the rhythm of fashion inspire us to embody the elegance, drama, and artistry in our own wardrobes. After all, style is not just what you wear—it's how you wear it.
     </p>
 </div>
                 </div>
             </div>
         </section>
 
-        <!-- Vogue Beauty Secrets Section -->
-        <section class="py-8">
+        <!-- Vogue Beauty Secrets Section - Reduced padding and added clear video link text -->
+        <section class="py-4">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">💄 Vogue Beauty Secrets & Beyond</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -96,16 +94,21 @@
                         @endfor
                     </div>
                 </div>
-                <div class="rounded-lg overflow-hidden border border-[#444e71] hover:scale-105 transition-transform duration-400">
-                    <a href="https://youtu.be/g_egyx3GLys?si=SVm8yk8xKI7elc0x" target="_blank" class="block">
-            <img src="/images/alexVogueBS.jpg" alt="Beauty secrets" class="w-full h-96 object-cover hover:opacity-90 transition">
-        </a>
+                <div>
+                    <div class="rounded-lg overflow-hidden border border-[#444e71] hover:scale-105 transition-transform duration-400 relative">
+                        <a href="https://youtu.be/g_egyx3GLys?si=SVm8yk8xKI7elc0x" target="_blank" class="block">
+                <img src="/images/alexVogueBS.jpg" alt="Beauty secrets" class="w-full h-96 object-cover hover:opacity-90 transition">
+            </a>
+                        <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+                            Click to watch video
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Moodboards Section - With Added Text -->
-        <section class="py-8">
+        <!-- Moodboards Section - Reduced padding -->
+        <section class="py-4">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">🎀 Style & Aesthetic Moodboards</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                 <div class="rounded-lg overflow-hidden border border-[#444e71] transform hover:scale-105 transition duration-300">
@@ -135,8 +138,8 @@
             </p>
         </section>
 
-         <!-- Style Guide Section -->
-        <section class="py-8">
+         <!-- Style Guide Section - Reduced padding -->
+        <section class="py-4">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">The Style Guide</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="grid grid-cols-1 gap-4">
@@ -150,26 +153,24 @@
                     <img src="/images/ji-style3.jpg" alt="Style guide 3" class="w-full h-48 object-cover">
                 </div>
                 </div>
-                <div style="
-    font-size: 1.1rem;
-">
+                <div style="font-size: 1.1rem;">
                     <div class="text-gray-600 space-y-4">
     <p>
-        Timeless style isn’t about keeping up—it’s about knowing yourself so deeply that every piece you wear feels like a second skin. It’s the confidence in a perfectly draped coat, the romance of a vintage slip, the edge of a sharp-shouldered blazer. True style is an extension of your essence, a language spoken in fabric and form.
+        Timeless style isn't about keeping up—it's about knowing yourself so deeply that every piece you wear feels like a second skin. It's the confidence in a perfectly draped coat, the romance of a vintage slip, the edge of a sharp-shouldered blazer. True style is an extension of your essence, a language spoken in fabric and form.
     </p>
     <p>
-        This guide is your key to curating a wardrobe that reflects your unique energy. We’ll explore the alchemy of silhouettes—how a cinched waist can create drama, how fluid lines can embody ease, how texture and layering can transform a simple look into something extraordinary. Every stitch carries intention, and every outfit is a love letter to the self.
+        This guide is your key to curating a wardrobe that reflects your unique energy. We'll explore the alchemy of silhouettes—how a cinched waist can create drama, how fluid lines can embody ease, how texture and layering can transform a simple look into something extraordinary. Every stitch carries intention, and every outfit is a love letter to the self.
     </p>
     <p>
-        Dressing well is an art, and I’ll help you master it with ease—from understanding the quiet power of monochrome dressing to the magic of the perfect heel. This is more than just a style guide; it’s a grimoire for looking effortlessly divine, where every choice you make is a spell cast in silk, lace, and leather.
+        Dressing well is an art, and I'll help you master it with ease—from understanding the quiet power of monochrome dressing to the magic of the perfect heel. This is more than just a style guide; it's a grimoire for looking effortlessly divine, where every choice you make is a spell cast in silk, lace, and leather.
     </p>
 </div>
                 </div>
             </div>
         </section>
 
-        <!-- Scent & Style Pairing Section -->
-        <section class="py-8">
+        <!-- Scent & Style Pairing Section - Reduced padding -->
+        <section class="py-4">
             <h2 class="text-3xl font-bold mb-6 text-[#444e71] dm-serif-text-regular border-b border-[#444e71] pb-2">Scent & Style Pairing</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -192,8 +193,8 @@
             </div>
         </section>
 
-        <!-- Updated Closing Statement -->
-        <div class="text-center mt-12 max-w-3xl mx-auto pt-8 border-t border-[#444e71]" style="padding-top: 1.25rem;">
+        <!-- Updated Closing Statement - Reduced margin -->
+        <div class="text-center mt-8 max-w-3xl mx-auto pt-8 border-t border-[#444e71]" style="padding-top: 1.25rem;">
             <p class="text-lg italic text-gray-600 leading-relaxed" style="padding-bottom: 2rem;">
                 Style is a love language, a daydream woven into fabric and fragrance. It's the way lace kisses your skin, the soft echo of heels on pavement, the perfume that lingers like a memory. 
                 <p class="text-2xl font-medium text-black dm-serif-text-regular">Here, fashion is more than just getting dressed—it's storytelling, self-discovery, and a little bit of magic. Whether you're here to find inspiration, a signature scent, or a feeling you can't quite name, I hope you leave wrapped in beauty, ready to make the world your runway.
