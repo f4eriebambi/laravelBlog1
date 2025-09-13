@@ -28,7 +28,6 @@
 
 .about-hero-title {
     font-size: 3rem;
-    /* font-weight: bold; */
     margin-bottom: 1rem;
 }
 
@@ -80,20 +79,61 @@
 .about-cta-content {
     max-width: 800px;
     margin: 0 auto;
+    padding-top: 1rem; /* Reduced from default */
+    padding-bottom: 1rem; /* Reduced from default */
 }
 
 .about-cta-title {
     font-size: 2.25rem;
     font-weight: bold;
     color: #1a202c;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .about-cta-text {
     font-size: 1rem;
     color: #4a5568;
     line-height: 1.75;
-    margin-bottom: 2rem;
+    /* margin-bottom: 1.5rem; */
+}
+
+.image-scroller-container {
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+    .scroller-image {
+    height: 80px;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll-right {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-scroll {
+    animation: 20s linear infinite scroll-left;
+}
+
+.animate-scroll-reverse {
+    animation: 20s linear infinite scroll-right;
 }
 
 .about-cta-image-container {
@@ -188,7 +228,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .ascii-art-image {
