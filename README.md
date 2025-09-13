@@ -117,6 +117,7 @@ DB_PASSWORD=your_password
 Run these commands to complete installation:
 ```
 php artisan migrate --seed
+php artisan storage:link
 php artisan serve
 npm run dev
 ```
