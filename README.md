@@ -120,6 +120,7 @@ php artisan migrate --seed
 php artisan storage:link
 php artisan serve
 npm run dev
+npm run watch
 ```
 
 ♡・・・・・・♡・・・・・・♡・・・・・・♡

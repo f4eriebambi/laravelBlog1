@@ -20,7 +20,7 @@ class BlogPostSeeder extends Seeder
             'name' => 'fae (admin)',
             'email' => 'admin123@gmail.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('Pyhveq!eRpPb2LM'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
