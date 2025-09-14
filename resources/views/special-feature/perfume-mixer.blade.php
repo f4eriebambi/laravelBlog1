@@ -16,22 +16,24 @@
 <body class="bg-gray-100 font-sans">
     <!-- Virtual Perfume Mixer Section with Background -->
     <div class="perfume-mixer-background min-h-screen flex items-center justify-center p-6" style="zoom: 88%;">
-        <div class="container mx-auto bg-white bg-opacity-70 rounded-lg shadow-lg p-8" style="max-width: 1200px;">
+        <div class="container mx-auto bg-white bg-opacity-90 rounded-2xl shadow-xl p-8 backdrop-blur-sm" style="max-width: 1300px;">
             <!-- Welcome Screen -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800">Virtual Perfume Mixer</h1>
-                <p class="mt-4 text-gray-600">Step into your personal scent atelier. Choose up to three notes, blend them together, and let your signature fragrance take shape. What story will your scent tell?</p>
-            </div>
+            <div class="text-center" style="margin-bottom: 1.5rem;">
+    <h1 class="text-5xl font-bold text-gray-800 font-playfair" style="font-family: 'Playfair Display', serif;">Virtual Perfume Mixer</h1>
+    <p class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+        Step into your personal scent atelier. Choose up to three notes, blend them together, and let your signature fragrance take shape. What story will your scent tell?
+    </p>
+</div>
 
             <!-- Mix and Restart Buttons -->
-            <div class="text-center mb-8">
-                <button id="mix-button" class="border border-gray-700 text-center bg-gray-50 text-gray-700 py-2 px-4 font-bold text-xl uppercase hover:bg-gray-700 hover:text-gray-50 transition-colors duration-300">
-                    Mix
-                </button>
-                <button id="restart-button" class="ml-4 border border-gray-700 text-center bg-gray-50 text-gray-700 py-2 px-4 font-bold text-xl uppercase hover:bg-gray-700 hover:text-gray-50 transition-colors duration-300">
-                    Restart
-                </button>
-            </div>
+            <div class="text-center" style="margin-bottom: 2rem;">
+    <button id="mix-button" class="border-2 border-gray-300 text-center bg-white text-gray-700 py-3 px-6 font-semibold text-lg uppercase hover:bg-gray-800 hover:text-white hover:border-gray-800 transition-all duration-300 rounded-full">
+        Mix
+    </button>
+    <button id="restart-button" class="border-2 border-gray-300 text-center bg-white text-gray-700 py-3 px-6 font-semibold text-lg uppercase hover:bg-gray-800 hover:text-white hover:border-gray-800 transition-all duration-300 rounded-full">
+        Restart
+    </button>
+</div>
 
             <!-- Fragrance Notes and Perfume Bottle -->
             <div class="notes-container" style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; margin-left: 80px;">
@@ -39,7 +41,7 @@
                 <div class="notes-column" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-right: 60px;">
                     @foreach($notes as $index => $note)
                         @if($index < count($notes) / 2)
-                            <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors"
+                            <div class="note p-5 bg-white rounded-xl shadow-md text-center cursor-pointer hover:bg-gray-50 transition-all duration-300 hover:shadow-lg border border-gray-100"
                                 data-note-id="{{ $note->id }}"
                                 data-color="{{ $note->category->color_code }}" 
                                 data-description="{{ $note->category->description }}">
@@ -71,7 +73,7 @@
                 <div class="notes-column" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-left: 60px;">
                     @foreach($notes as $index => $note)
                         @if($index >= count($notes) / 2)
-                            <div class="note p-4 bg-white rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-50 transition-colors"
+                            <div class="note p-5 bg-white rounded-xl shadow-md text-center cursor-pointer hover:bg-gray-50 transition-all duration-300 hover:shadow-lg border border-gray-100"
                                 data-note-id="{{ $note->id }}"
                                 data-color="{{ $note->category->color_code }}" 
                                 data-description="{{ $note->category->description }}">

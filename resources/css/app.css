@@ -669,3 +669,167 @@ footer a:hover {
         rgba(0, 0, 0, 0.5)
     );
 }
+
+/* Carousel container - prevent horizontal overflow */
+.carousel-wrapper {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    overflow: hidden;
+    padding: 2.5rem 0;
+    background: white;
+    text-align: center;
+}
+
+/* Original animate-scroll but with proper gaps */
+.animate-scroll {
+    animation: scroll 40s linear infinite;
+    display: flex;
+    width: max-content;
+    gap: 6rem; /* This adds the spacing between items */
+}
+
+/* Ensure carousel items maintain their width and spacing */
+.animate-scroll .min-w-\[300px\] {
+    min-width: 300px;
+    flex-shrink: 0;
+}
+
+.animate-scroll .min-w-\[300px\] p {
+    text-align: center !important;
+    padding: 0 1rem;
+    margin-top: 1rem;
+}
+
+/* Perfume section fixes */
+.perfume-section-fixed {
+    background: #f8f9fa !important;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove any unwanted gradients from video container */
+.video-container-fixed {
+    border-radius: 16px;
+    height: 70vh; /* Fixed height that doesn't try to match text section */
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.video-overlay-fixed {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.02); /* Very subtle overlay only */
+    border-radius: 16px;
+    pointer-events: none; /* Add this line to make overlay non-interactive */
+}
+
+/* Text content styling fixes */
+.perfume-content-fixed {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Don't center, start from top */
+    height: auto; /* Let content determine height */
+}
+
+/* Title styling - remove underline gradient */
+.perfume-title-fixed {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #374151;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+
+.perfume-title-highlight {
+    color: #9f0000;
+    position: relative;
+}
+
+/* Simple underline without gradient */
+.perfume-title-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #9f0000;
+    border-radius: 1px;
+}
+
+/* Quote section styling fixes */
+.quote-section-fixed {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(159, 0, 0, 0.1);
+}
+
+/* Button styling improvements */
+.cta-button-fixed {
+    background: linear-gradient(135deg, #9f0000 0%, #7f0000 100%);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    width: fit-content;
+    position: relative; /* Add this */
+    z-index: 10; /* Add this to ensure button is on top */
+}
+
+.cta-button-fixed:hover {
+    background: white;
+    color: #9f0000;
+    border-color: #9f0000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(159, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .perfume-section-fixed .grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .video-container-fixed {
+        height: 50vh;
+    }
+    
+    .perfume-title-fixed {
+        font-size: 2rem;
+    }
+    
+    .quote-section-fixed {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.cormorant-font {
+    font-family: 'Cormorant Garamond', serif !important;
+}
+
+.home-page-zoom {
+    zoom: 0.97;
+    transform-origin: top left;
+    overflow-y: scroll; overflow-x: hidden;
+}
