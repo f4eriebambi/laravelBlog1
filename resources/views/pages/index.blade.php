@@ -51,12 +51,12 @@
                 </p>
 
                 <div class="quote-section-fixed">
-                    <img src="/images/perfume_icon.jpg" alt="Icon" class="rounded-full" style="width: 70px; height: 70px; border: 2px solid #9f0000;">
-                    <div class="flex-1 text-gray-500 italic" style="font-size: 1rem; line-height: 1.6;">
-                        "Fragrance is the unseen whisper that lingers, an invisible signature of your essence."
-                        <span class="block text-right text-sm text-red-900 mt-2 font-semibold">- Unknown</span>
-                    </div>
-                </div>
+    <img src="/images/perfume_icon.jpg" alt="Icon" class="rounded-full perfume-icon-spin" style="width: 70px; height: 70px; border: 2px solid #9f0000;">
+    <div class="flex-1 text-gray-500 italic" style="font-size: 1rem; line-height: 1.6;">
+        "Fragrance is the unseen whisper that lingers, an invisible signature of your essence."
+        <span class="block text-right text-sm text-red-900 mt-2 font-semibold">- Unknown</span>
+    </div>
+</div>
             
                 <a href="/fragrance-guide" class="cta-button-fixed">
                     Come Indulge

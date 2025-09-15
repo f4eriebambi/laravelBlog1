@@ -727,6 +727,24 @@ footer a:hover {
     pointer-events: none; /* Add this line to make overlay non-interactive */
 }
 
+.perfume-icon-spin {
+    transition: transform 0.3s ease;
+}
+
+.perfume-icon-spin:hover {
+    animation: spin 1s ease-in-out;
+    transform: scale(1.1);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg) scale(1.1);
+    }
+    to {
+        transform: rotate(360deg) scale(1.1);
+    }
+}
+
 /* Text content styling fixes */
 .perfume-content-fixed {
     padding: 2rem;

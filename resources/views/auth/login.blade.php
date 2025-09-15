@@ -45,7 +45,7 @@
         <div class="login-form-side">
             <div class="login-form_area">
                 <div class="login-title">
-                    Welcome 𐦍<br><span>Enter Your Enchanted World !</span>
+                    Welcome Back 𐦍<br><span>Enter Your Enchanted World !</span>
                 </div>
                 <form class="w-full space-y-6" method="POST" action="{{ route('login') }}">
                     @csrf

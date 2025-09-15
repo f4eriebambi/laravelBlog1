@@ -249,10 +249,12 @@
     transform: translateY(-5px);
 }
 
-/* .delete-blend {
-    background: linear-gradient(-75deg, rgba(255, 154, 162, 0.2), rgba(255, 183, 178, 0.3));
+.blend-card .absolute.top-4.right-4 {
+    top: 1rem;
+    right: 50%;
+    transform: translateX(50%);
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
 }
-
-.delete-blend:hover {
-    background: linear-gradient(-75deg, rgba(255, 154, 162, 0.3), rgba(255, 183, 178, 0.4));
-} */

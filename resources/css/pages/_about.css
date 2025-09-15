@@ -101,13 +101,32 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 1.5rem;
+    width: 100%;
+    height: auto;
 }
 
-    .scroller-image {
+.image-scroller-container .flex {
+    gap: 2rem; 
+}
+
+.scroller-image {
     height: 80px;
     width: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     object-fit: cover;
+    flex-shrink: 0; 
+}
+
+.flex.w-max.animate-scroll,
+.flex.w-max.animate-scroll-reverse {
+    gap: 2rem !important; 
+    padding: 0.5rem 1rem;
+}
+
+.flex.w-max.animate-scroll > *,
+.flex.w-max.animate-scroll-reverse > * {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 @keyframes scroll-left {

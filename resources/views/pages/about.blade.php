@@ -49,59 +49,27 @@
         </div>
     </div>
 
-    <!-- Top Image Scroller Section -->
+<!-- Top Image Scroller Section -->
 <div class="image-scroller-container">
-    <div class="flex w-max animate-scroll space-x-8 py-2 px-4">
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
+    <div class="flex w-max animate-scroll py-2 px-4">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
         
         <!-- DUPLICATES FOR SEAMLESS SCROLLING -->
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
     </div>
 </div>
 
@@ -114,7 +82,7 @@
     <div class="about-cta-content">
          @auth
             <!-- Content for logged-in users -->
-            <h2 class="about-cta-title">Welcome Back ── </h2>
+            <h2 class="about-cta-title">Look who it is! ── </h2>
             <p class="about-cta-text">
                 So glad to have you here in this space where beauty is an art form, and every detail is an invitation to dream. 
                 Continue exploring new favorites, and immerse yourself in our world where fashion and fragrance become poetry.
@@ -171,60 +139,25 @@
 
 <!-- Bottom Image Scroller Section -->
 <div class="image-scroller-container">
-    <div class="flex w-max animate-scroll-reverse space-x-8 py-2 px-4">
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
+    <div class="flex w-max animate-scroll-reverse py-2 px-4">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
         
         <!-- DUPLICATES FOR SEAMLESS SCROLLING -->
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
-        <div class="flex items-center space-x-4 shrink-0">
-            <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
-        </div>
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
+        <img src="/images/aboutDivider.jpg" alt="Fashion inspiration" class="scroller-image">
     </div>
 </div>
-{{-- <div class="about-cta-image-container">
-        <div class="about-cta-image"></div>
-    </div> --}}
 @endsection
