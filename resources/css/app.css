@@ -847,7 +847,9 @@ footer a:hover {
 }
 
 .home-page-zoom {
-    zoom: 0.97;
+    zoom: 0.96;
     transform-origin: top left;
-    overflow-y: scroll; overflow-x: hidden;
+    /* overflow-y: scroll;  */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
