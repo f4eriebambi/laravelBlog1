@@ -10,7 +10,9 @@ A digital dreamscape of fashion musings and the softest trails of perfume made i
 ✦ Interactive 'Virtual Perfume Mixer' experience  
 ✦ Visually rich moodboards and style guides  
 
-![OFFDUTY FAERIE](https://github.com/user-attachments/assets/0d78200c-4afe-4fca-98f8-597d86ac418b)
+
+https://github.com/user-attachments/assets/050ee255-572e-477d-ae9e-29309f26864a
+
 
 ## ۶ৎ𐂂 Project Tagline  
 "Fashion, Fragrance and All Things Pretty ~~ !!"
